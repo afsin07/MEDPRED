@@ -1,4 +1,5 @@
-# MediPredict — Day 46–52 Full-Stack AI Project
+# MediPredict —
+Full-Stack AI Project
 
 MediPredict is an educational health-assessment application. It provides a web-based health assessment workflow, sends assessment data to a Flask backend, stores application data in MySQL, and uses the integrated health-scoring/prediction engine to generate an educational assessment report.
 
