@@ -8,7 +8,7 @@
 // MEDIPREDICT_API_BASE can still be overridden before this script loads.
 (() => {
   const LOCAL_API_BASE = "http://127.0.0.1:5000";
-  const LIVE_API_BASE = "https://deploy-p2dm.onrender.com";
+  const LIVE_API_BASE = "https://medpred-backend.onrender.com";
 
   const host = window.location.hostname;
   const isLocalHost =
