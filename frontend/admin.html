@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Command Center | MediPredict</title>
+    <meta name="description" content="MediPredict system administration dashboard for user management and platform monitoring.">
+    
+    <!-- Google Fonts & Font Awesome -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="app.css">
+    <style>
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+        .admin-table th, .admin-table td {
+            padding: 14px 16px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+        .admin-table th {
+            background-color: var(--surface-elevated);
+            color: var(--text-muted);
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ==================== HYBRID TOP BAR ==================== -->
+    <nav class="navbar" id="mainNavbar">
+        <div class="nav-left-group">
+            <button class="sidebar-toggle-btn" id="sidebarToggle" title="Toggle Full Feature Sidebar">
+                <i class="fa-solid fa-bars-staggered"></i>
+            </button>
+            <a href="index.html" class="logo">
+                Medi<span class="text-teal">Predict</span>
+            </a>
+        </div>
+
+        <!-- Essential Top Nav Links Only -->
+        <ul class="nav-links-essential">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="admin.html" class="active">Admin</a></li>
+        </ul>
+
+        <div class="nav-actions">
+            <button class="btn btn-outline btn-sm" id="logoutBtn">Logout</button>
+        </div>
+    </nav>
+
+    <!-- ==================== CLOSABLE SIDEBAR DRAWER (ALL FEATURES) ==================== -->
+    <aside class="sidebar-drawer" id="sidebarDrawer">
+        <div>
+            <div class="sidebar-drawer-header">
+                <a href="index.html" class="logo" style="font-size: 20px;">
+                    Medi<span class="text-teal">Predict</span>
+                </a>
+                <button class="sidebar-close-btn" id="sidebarCloseBtn" title="Close Sidebar">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="sidebar-section-label">NAVIGATION</div>
+            <ul class="sidebar-feature-list">
+                <li class="sidebar-feature-item">
+                    <a href="index.html">
+                        <i class="fa-solid fa-house"></i>
+                        <span>Home Page</span>
+                    </a>
+                </li>
+                <li class="sidebar-feature-item">
+                    <a href="dashboard.html">
+                        <i class="fa-solid fa-gauge-high"></i>
+                        <span>User Dashboard</span>
+                    </a>
+                </li>
+                <li class="sidebar-feature-item">
+                    <a href="health-form.html">
+                        <i class="fa-solid fa-notes-medical"></i>
+                        <span>New Health Assessment</span>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="sidebar-section-label">INTELLIGENCE PLATFORM</div>
+            <ul class="sidebar-feature-list">
+                <li class="sidebar-feature-item">
+                    <a href="index.html#categories">
+                        <i class="fa-solid fa-list-check"></i>
+                        <span>Health Categories</span>
+                    </a>
+                </li>
+                <li class="sidebar-feature-item">
+                    <a href="index.html#workflow">
+                        <i class="fa-solid fa-diagram-project"></i>
+                        <span>Platform Workflow</span>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="sidebar-section-label">ADMINISTRATION</div>
+            <ul class="sidebar-feature-list">
+                <li class="sidebar-feature-item">
+                    <a href="admin.html" class="active">
+                        <i class="fa-solid fa-shield-halved"></i>
+                        <span>Admin Command Center</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="sidebar-drawer-footer">
+            <a href="health-form.html" class="btn btn-primary btn-sm" style="width: 100%;">
+                <i class="fa-solid fa-plus"></i> New Assessment
+            </a>
+        </div>
+    </aside>
+
+    <!-- Sidebar Backdrop Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- App Container -->
+    <div class="app-container">
+        
+        <div style="margin-bottom: 36px;">
+            <span class="label-caps"><i class="fa-solid fa-lock"></i> SYSTEM MANAGEMENT</span>
+            <h1 style="font-size: 32px; margin-top: 8px;">Admin Command Center</h1>
+            <p>Monitor platform statistics, registered accounts, and generated assessment reports.</p>
+        </div>
+
+        <!-- Admin Stats Bar -->
+        <div class="metrics-grid" style="grid-template-columns: repeat(2, 1fr); margin-bottom: 40px;">
+            <div class="metric-card">
+                <div class="metric-label">REGISTERED USERS</div>
+                <div class="metric-value text-teal" id="adminStatUsers">0</div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-label">TOTAL GENERATED REPORTS</div>
+                <div class="metric-value" id="adminStatReports">0</div>
+            </div>
+        </div>
+
+        <!-- Users Table -->
+        <div class="assessment-stage-card" style="margin-bottom: 40px;">
+            <span class="stage-badge">USER DATABASE</span>
+            <h3 class="stage-title">Registered Account Profiles</h3>
+            
+            <div style="overflow-x: auto;">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>User ID</th>
+                            <th>Name</th>
+                            <th>Email Address</th>
+                            <th>Registration Date</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adminUsersTbody">
+                        <!-- Rendered by admin.js -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Reports History Table -->
+        <div class="assessment-stage-card">
+            <span class="stage-badge">SYSTEM REPORTS</span>
+            <h3 class="stage-title">System Health Reports Log</h3>
+            
+            <div style="overflow-x: auto;">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Report ID</th>
+                            <th>User</th>
+                            <th>Top Flagged Condition</th>
+                            <th>Risk Level</th>
+                            <th>Health Score</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adminReportsTbody">
+                        <!-- Rendered by admin.js -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/api-config.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="script.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html>

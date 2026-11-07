@@ -1,0 +1,38 @@
+{
+  "client": "Thunder Client",
+  "collectionName": "MediPredict Day 46-52 Flask",
+  "requests": [
+    {
+      "name": "Health",
+      "method": "GET",
+      "url": "http://127.0.0.1:5000/api/health"
+    },
+    {
+      "name": "Valid Prediction",
+      "method": "POST",
+      "url": "http://127.0.0.1:5000/api/predict",
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"bloodPressure\": \"normal\",\n  \"bloodSugar\": \"normal\",\n  \"sleepHours\": 8,\n  \"stressLevel\": 3,\n  \"smoking\": \"no\",\n  \"alcohol\": \"no\",\n  \"activity\": \"active\",\n  \"diet\": \"balanced\",\n  \"symptoms\": [],\n  \"existingConditions\": []\n}"
+      }
+    },
+    {
+      "name": "Missing Input",
+      "method": "POST",
+      "url": "http://127.0.0.1:5000/api/predict",
+      "body": {
+        "type": "json",
+        "raw": "{}"
+      }
+    },
+    {
+      "name": "Invalid Value",
+      "method": "POST",
+      "url": "http://127.0.0.1:5000/api/predict",
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"bloodPressure\": \"invalid\",\n  \"bloodSugar\": \"normal\",\n  \"sleepHours\": 8,\n  \"stressLevel\": 3,\n  \"smoking\": \"no\",\n  \"alcohol\": \"no\",\n  \"activity\": \"active\",\n  \"diet\": \"balanced\"\n}"
+      }
+    }
+  ]
+}

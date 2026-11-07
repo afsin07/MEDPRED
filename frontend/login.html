@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In | MediPredict</title>
+    <meta name="description" content="Sign in to your MediPredict account to view health assessments and personal insights.">
+    
+    <!-- Google Fonts & Font Awesome -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="app.css">
+</head>
+<body>
+
+    <!-- ==================== HYBRID TOP BAR ==================== -->
+    <nav class="navbar" id="mainNavbar">
+        <div class="nav-left-group">
+            <button class="sidebar-toggle-btn" id="sidebarToggle" title="Toggle Full Feature Sidebar">
+                <i class="fa-solid fa-bars-staggered"></i>
+            </button>
+            <a href="index.html" class="logo">
+                Medi<span class="text-teal">Predict</span>
+            </a>
+        </div>
+
+        <!-- Essential Top Nav Links Only -->
+        <ul class="nav-links-essential">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="health-form.html">New Assessment</a></li>
+        </ul>
+
+        <div class="nav-actions">
+            <a href="register.html" class="btn btn-primary btn-sm">Create Account</a>
+        </div>
+    </nav>
+
+    <!-- ==================== CLOSABLE SIDEBAR DRAWER (ALL FEATURES) ==================== -->
+    <aside class="sidebar-drawer" id="sidebarDrawer">
+        <div>
+            <div class="sidebar-drawer-header">
+                <a href="index.html" class="logo" style="font-size: 20px;">
+                    Medi<span class="text-teal">Predict</span>
+                </a>
+                <button class="sidebar-close-btn" id="sidebarCloseBtn" title="Close Sidebar">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="sidebar-section-label">NAVIGATION</div>
+            <ul class="sidebar-feature-list">
+                <li class="sidebar-feature-item">
+                    <a href="index.html">
+                        <i class="fa-solid fa-house"></i>
+                        <span>Home Page</span>
+                    </a>
+                </li>
+                <li class="sidebar-feature-item">
+                    <a href="dashboard.html">
+                        <i class="fa-solid fa-gauge-high"></i>
+                        <span>User Dashboard</span>
+                    </a>
+                </li>
+                <li class="sidebar-feature-item">
+                    <a href="health-form.html">
+                        <i class="fa-solid fa-notes-medical"></i>
+                        <span>New Health Assessment</span>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="sidebar-section-label">INTELLIGENCE PLATFORM</div>
+            <ul class="sidebar-feature-list">
+                <li class="sidebar-feature-item">
+                    <a href="index.html#categories">
+                        <i class="fa-solid fa-list-check"></i>
+                        <span>Health Categories</span>
+                    </a>
+                </li>
+                <li class="sidebar-feature-item">
+                    <a href="index.html#workflow">
+                        <i class="fa-solid fa-diagram-project"></i>
+                        <span>Platform Workflow</span>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="sidebar-section-label">ADMINISTRATION</div>
+            <ul class="sidebar-feature-list">
+                <li class="sidebar-feature-item">
+                    <a href="admin.html">
+                        <i class="fa-solid fa-shield-halved"></i>
+                        <span>Admin Command Center</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="sidebar-drawer-footer">
+            <a href="register.html" class="btn btn-primary btn-sm" style="width: 100%;">
+                <i class="fa-solid fa-user-plus"></i> Create Account
+            </a>
+        </div>
+    </aside>
+
+    <!-- Sidebar Backdrop Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Auth Page Wrapper -->
+    <div class="auth-page-wrap">
+        <div class="auth-card">
+            <div class="auth-header">
+                <span class="label-caps"><i class="fa-solid fa-lock"></i> SECURE SIGN IN</span>
+                <h2>Welcome Back</h2>
+                <p>Sign in to access your dashboard and health reports.</p>
+            </div>
+
+            <!-- Error Banner -->
+            <div class="alert-error" id="loginError"></div>
+
+            <form class="auth-form" id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail">Email Address</label>
+                    <div class="input-box">
+                        <i class="fa-solid fa-envelope"></i>
+                        <input type="email" id="loginEmail" placeholder="name@example.com" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <div class="input-box">
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" id="loginPassword" placeholder="••••••••" required>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary" id="loginSubmitBtn" style="width: 100%; margin-top: 8px;">
+                    Sign In <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </form>
+
+            <div style="text-align: center; margin-top: 24px; font-size: 14px; color: var(--text-muted);">
+                Don't have an account? <a href="register.html" style="color: var(--accent-teal); font-weight: 600;">Create Account</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/api-config.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="script.js"></script>
+    <script src="js/login.js"></script>
+</body>
+</html>

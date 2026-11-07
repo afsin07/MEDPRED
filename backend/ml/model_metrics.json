@@ -1,0 +1,10 @@
+{
+  "dataset_rows": 6000,
+  "accuracy": 0.7992,
+  "weighted_precision": 0.8004,
+  "weighted_recall": 0.7992,
+  "weighted_f1": 0.7975,
+  "random_state": 42,
+  "model": "RandomForestClassifier",
+  "note": "Synthetic educational dataset; metrics are not clinical validation."
+}

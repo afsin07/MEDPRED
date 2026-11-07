@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Assessment | MediPredict</title>
+    <meta name="description" content="Complete MediPredict guided clinical health assessment questionnaire.">
+    
+    <!-- Google Fonts & Font Awesome -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="app.css">
+    <link rel="stylesheet" href="assessment-redesign.css">
+</head>
+<body>
+
+    <!-- ==================== HYBRID TOP BAR ==================== -->
+    <nav class="navbar" id="mainNavbar">
+        <div class="nav-left-group">
+            <button class="sidebar-toggle-btn" id="sidebarToggle" title="Toggle Full Feature Sidebar">
+                <i class="fa-solid fa-bars-staggered"></i>
+            </button>
+            <a href="index.html" class="logo">
+                Medi<span class="text-teal">Predict</span>
+            </a>
+        </div>
+
+        <!-- Essential Top Nav Links Only -->
+        <ul class="nav-links-essential">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="health-form.html" class="active">New Assessment</a></li>
+        </ul>
+
+        <div class="nav-actions">
+            <button class="btn btn-outline btn-sm" id="logoutBtn">Logout</button>
+        </div>
+    </nav>
+
+    <!-- ==================== CLOSABLE SIDEBAR DRAWER (ALL FEATURES) ==================== -->
+    <aside class="sidebar-drawer" id="sidebarDrawer">
+        <div>
+            <div class="sidebar-drawer-header">
+                <a href="index.html" class="logo" style="font-size: 20px;">
+                    Medi<span class="text-teal">Predict</span>
+                </a>
+                <button class="sidebar-close-btn" id="sidebarCloseBtn" title="Close Sidebar">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="sidebar-section-label">NAVIGATION</div>
+            <ul class="sidebar-feature-list">
+                <li class="sidebar-feature-item">
+                    <a href="index.html">
+                        <i class="fa-solid fa-house"></i>
+                        <span>Home Page</span>
+                    </a>
+                </li>
+                <li class="sidebar-feature-item">
+                    <a href="dashboard.html">
+                        <i class="fa-solid fa-gauge-high"></i>
+                        <span>User Dashboard</span>
+                    </a>
+                </li>
+                <li class="sidebar-feature-item">
+                    <a href="health-form.html" class="active">
+                        <i class="fa-solid fa-notes-medical"></i>
+                        <span>New Health Assessment</span>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="sidebar-section-label">INTELLIGENCE PLATFORM</div>
+            <ul class="sidebar-feature-list">
+                <li class="sidebar-feature-item">
+                    <a href="index.html#categories">
+                        <i class="fa-solid fa-list-check"></i>
+                        <span>Health Categories</span>
+                    </a>
+                </li>
+                <li class="sidebar-feature-item">
+                    <a href="index.html#workflow">
+                        <i class="fa-solid fa-diagram-project"></i>
+                        <span>Platform Workflow</span>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="sidebar-section-label">ADMINISTRATION</div>
+            <ul class="sidebar-feature-list">
+                <li class="sidebar-feature-item">
+                    <a href="admin.html">
+                        <i class="fa-solid fa-shield-halved"></i>
+                        <span>Admin Command Center</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="sidebar-drawer-footer">
+            <a href="health-form.html" class="btn btn-primary btn-sm" style="width: 100%;">
+                <i class="fa-solid fa-plus"></i> New Assessment
+            </a>
+        </div>
+    </aside>
+
+    <!-- Sidebar Backdrop Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- App Container -->
+    <div class="app-container assessment-app-container">
+        
+        <!-- Header Banner with Photo Showcase -->
+        <div style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 24px; align-items: center; margin-bottom: 32px;">
+            <div>
+                <span class="label-caps">HEALTH ASSESSMENT</span>
+                <h1 style="font-size: 32px; margin-top: 8px;">Tell MediPredict about your current health.</h1>
+                <p style="margin-top: 8px;">
+                    Answer the questions as accurately as possible. Your responses are used to generate an educational assessment.
+                </p>
+            </div>
+            <div class="clinical-photo-frame" style="height: 160px;">
+                <img src="assets/images/stethoscope-report.png" alt="Clinical Assessment Questionnaire" loading="lazy">
+                <div class="clinical-photo-overlay" style="padding: 14px;">
+                    <span class="clinical-photo-badge" style="font-size: 10px;"><i class="fa-solid fa-clipboard-check"></i> CLINICAL PROTOCOL</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Prominent Educational Disclaimer -->
+        <div class="disclaimer-box">
+            <i class="fa-solid fa-shield-halved"></i>
+            <div>
+                <strong>Educational Assessment Notice</strong><br>
+                MediPredict is an educational/demo tool and does not replace professional medical diagnosis.
+            </div>
+        </div>
+
+        <!-- Assessment Form -->
+        <form id="healthForm">
+            
+            <!-- STAGE 01: VITALS -->
+            <div class="assessment-stage-card">
+                <span class="stage-badge">STAGE 01 — VITALS</span>
+                <h3 class="stage-title">Vital Health Indicators</h3>
+                
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label for="bloodPressure">Blood Pressure Level</label>
+                        <div class="input-box">
+                            <i class="fa-solid fa-heart-pulse"></i>
+                            <select id="bloodPressure" required>
+                                <option value="normal">Normal (&lt; 120/80 mmHg)</option>
+                                <option value="elevated">Elevated (120-129/&lt;80 mmHg)</option>
+                                <option value="high">High (≥ 130/80 mmHg)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="bloodSugar">Fasting Blood Sugar</label>
+                        <div class="input-box">
+                            <i class="fa-solid fa-droplet"></i>
+                            <select id="bloodSugar" required>
+                                <option value="normal">Normal (&lt; 100 mg/dL)</option>
+                                <option value="high">High (≥ 100 mg/dL)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="range-slider-group" style="grid-column: span 2;">
+                        <div class="range-header">
+                            <label for="sleepHours">Daily Sleep Duration (Hours)</label>
+                            <span class="val-display"><span id="sleepValue">7</span> Hours</span>
+                        </div>
+                        <input type="range" id="sleepHours" min="3" max="12" value="7" step="1">
+                    </div>
+
+                    <div class="range-slider-group" style="grid-column: span 2;">
+                        <div class="range-header">
+                            <label for="stressLevel">Perceived Stress Level (1 to 10)</label>
+                            <span class="val-display"><span id="stressValue">5</span> / 10</span>
+                        </div>
+                        <input type="range" id="stressLevel" min="1" max="10" value="5" step="1">
+                    </div>
+                </div>
+            </div>
+
+            <!-- STAGE 02: LIFESTYLE -->
+            <div class="assessment-stage-card">
+                <span class="stage-badge">STAGE 02 — LIFESTYLE</span>
+                <h3 class="stage-title">Lifestyle & Routine Habits</h3>
+
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label for="smoking">Tobacco & Smoking Use</label>
+                        <div class="input-box">
+                            <i class="fa-solid fa-smoking"></i>
+                            <select id="smoking" required>
+                                <option value="no">Non-smoker</option>
+                                <option value="occasionally">Occasionally</option>
+                                <option value="yes">Regular Smoker</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="alcohol">Alcohol Consumption</label>
+                        <div class="input-box">
+                            <i class="fa-solid fa-wine-glass"></i>
+                            <select id="alcohol" required>
+                                <option value="no">None / Rarely</option>
+                                <option value="occasional">Occasional</option>
+                                <option value="frequent">Frequent</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="activity">Physical Activity Level</label>
+                        <div class="input-box">
+                            <i class="fa-solid fa-person-running"></i>
+                            <select id="activity" required>
+                                <option value="sedentary">Sedentary (Little/no exercise)</option>
+                                <option value="light">Light (1-2 days/week)</option>
+                                <option value="moderate" selected>Moderate (3-4 days/week)</option>
+                                <option value="active">Active (5+ days/week)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="diet">Dietary Quality</label>
+                        <div class="input-box">
+                            <i class="fa-solid fa-utensils"></i>
+                            <select id="diet" required>
+                                <option value="balanced" selected>Balanced & Whole Foods</option>
+                                <option value="irregular">Irregular Meal Times</option>
+                                <option value="highSugarFat">High Sugar / Processed Foods</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STAGE 03: EXISTING CONDITIONS -->
+            <div class="assessment-stage-card">
+                <span class="stage-badge">STAGE 03 — CONDITIONS</span>
+                <h3 class="stage-title">Diagnosed Existing Conditions</h3>
+                
+                <div class="checkbox-group-grid">
+                    <label class="custom-checkbox-label">
+                        <input type="checkbox" name="existingConditions" value="hypertension">
+                        <span>Hypertension</span>
+                    </label>
+                    <label class="custom-checkbox-label">
+                        <input type="checkbox" name="existingConditions" value="diabetes">
+                        <span>Diabetes</span>
+                    </label>
+                    <label class="custom-checkbox-label">
+                        <input type="checkbox" name="existingConditions" value="asthma">
+                        <span>Asthma</span>
+                    </label>
+                    <label class="custom-checkbox-label">
+                        <input type="checkbox" name="existingConditions" value="heartDisease">
+                        <span>Heart Disease</span>
+                    </label>
+                    <label class="custom-checkbox-label">
+                        <input type="checkbox" name="existingConditions" value="none">
+                        <span>None</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- STAGE 04: CURRENT SYMPTOMS -->
+            <div class="assessment-stage-card">
+                <span class="stage-badge">STAGE 04 — SYMPTOMS</span>
+                <h3 class="stage-title">Current Experienced Symptoms</h3>
+                
+                <div class="checkbox-group-grid">
+                    <label class="custom-checkbox-label">
+                        <input type="checkbox" name="symptoms" value="fever">
+                        <span>Fever</span>
+                    </label>
+                    <label class="custom-checkbox-label">
+                        <input type="checkbox" name="symptoms" value="cough">
+                        <span>Cough</span>
+                    </label>
+                    <label class="custom-checkbox-label">
+                        <input type="checkbox" name="symptoms" value="headache">
+                        <span>Headache</span>
+                    </label>
+                    <label class="custom-checkbox-label">
+                        <input type="checkbox" name="symptoms" value="fatigue">
+                        <span>Fatigue</span>
+                    </label>
+                    <label class="custom-checkbox-label">
+                        <input type="checkbox" name="symptoms" value="dizziness">
+                        <span>Dizziness</span>
+                    </label>
+                    <label class="custom-checkbox-label">
+                        <input type="checkbox" name="symptoms" value="chestPain">
+                        <span>Chest Discomfort</span>
+                    </label>
+                    <label class="custom-checkbox-label">
+                        <input type="checkbox" name="symptoms" value="shortnessOfBreath">
+                        <span>Shortness of Breath</span>
+                    </label>
+                    <label class="custom-checkbox-label">
+                        <input type="checkbox" name="symptoms" value="frequentUrination">
+                        <span>Frequent Urination</span>
+                    </label>
+                    <label class="custom-checkbox-label">
+                        <input type="checkbox" name="symptoms" value="excessiveThirst">
+                        <span>Excessive Thirst</span>
+                    </label>
+                    <label class="custom-checkbox-label">
+                        <input type="checkbox" name="symptoms" value="blurredVision">
+                        <span>Blurred Vision</span>
+                    </label>
+                    <label class="custom-checkbox-label">
+                        <input type="checkbox" name="symptoms" value="weightLoss">
+                        <span>Unexplained Weight Loss</span>
+                    </label>
+                    <label class="custom-checkbox-label">
+                        <input type="checkbox" name="symptoms" value="soreThroat">
+                        <span>Sore Throat</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-primary" id="formSubmitBtn" style="width: 100%; padding: 16px; font-size: 16px;">
+                Generate Assessment <i class="fa-solid fa-arrow-right"></i>
+            </button>
+        </form>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/api-config.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="script.js"></script>
+    <script src="js/health-form.js"></script>
+</body>
+</html>

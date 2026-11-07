@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Command Center | MediPredict</title>
+    <meta name="description" content="MediPredict user dashboard displaying overall health score, latest risk level, and assessment history.">
+    
+    <!-- Google Fonts & Font Awesome -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="app.css">
+</head>
+<body>
+
+    <!-- ==================== HYBRID TOP BAR ==================== -->
+    <nav class="navbar" id="mainNavbar">
+        <div class="nav-left-group">
+            <button class="sidebar-toggle-btn" id="sidebarToggle" title="Toggle Full Feature Sidebar">
+                <i class="fa-solid fa-bars-staggered"></i>
+            </button>
+            <a href="index.html" class="logo">
+                Medi<span class="text-teal">Predict</span>
+            </a>
+        </div>
+
+        <!-- Essential Top Nav Links Only -->
+        <ul class="nav-links-essential">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="dashboard.html" class="active">Dashboard</a></li>
+            <li><a href="health-form.html">New Assessment</a></li>
+        </ul>
+
+        <div class="nav-actions">
+            <a href="health-form.html" class="btn btn-primary btn-sm">New Assessment</a>
+            <button class="btn btn-outline btn-sm" id="logoutBtn">Logout</button>
+        </div>
+    </nav>
+
+    <!-- ==================== CLOSABLE SIDEBAR DRAWER (ALL FEATURES) ==================== -->
+    <aside class="sidebar-drawer" id="sidebarDrawer">
+        <div>
+            <div class="sidebar-drawer-header">
+                <a href="index.html" class="logo" style="font-size: 20px;">
+                    Medi<span class="text-teal">Predict</span>
+                </a>
+                <button class="sidebar-close-btn" id="sidebarCloseBtn" title="Close Sidebar">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="sidebar-section-label">NAVIGATION</div>
+            <ul class="sidebar-feature-list">
+                <li class="sidebar-feature-item">
+                    <a href="index.html">
+                        <i class="fa-solid fa-house"></i>
+                        <span>Home Page</span>
+                    </a>
+                </li>
+                <li class="sidebar-feature-item">
+                    <a href="dashboard.html" class="active">
+                        <i class="fa-solid fa-gauge-high"></i>
+                        <span>User Dashboard</span>
+                    </a>
+                </li>
+                <li class="sidebar-feature-item">
+                    <a href="health-form.html">
+                        <i class="fa-solid fa-notes-medical"></i>
+                        <span>New Health Assessment</span>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="sidebar-section-label">INTELLIGENCE PLATFORM</div>
+            <ul class="sidebar-feature-list">
+                <li class="sidebar-feature-item">
+                    <a href="index.html#categories">
+                        <i class="fa-solid fa-list-check"></i>
+                        <span>Health Categories</span>
+                    </a>
+                </li>
+                <li class="sidebar-feature-item">
+                    <a href="index.html#workflow">
+                        <i class="fa-solid fa-diagram-project"></i>
+                        <span>Platform Workflow</span>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="sidebar-section-label">ADMINISTRATION</div>
+            <ul class="sidebar-feature-list">
+                <li class="sidebar-feature-item">
+                    <a href="admin.html">
+                        <i class="fa-solid fa-shield-halved"></i>
+                        <span>Admin Command Center</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="sidebar-drawer-footer">
+            <a href="health-form.html" class="btn btn-primary btn-sm" style="width: 100%;">
+                <i class="fa-solid fa-plus"></i> New Assessment
+            </a>
+
+            <div class="sidebar-user-info" id="sidebarUserInfo" style="display: none; align-items: center; gap: 12px; padding: 10px; background: var(--surface); border-radius: var(--radius-sm); border: 1px solid var(--border-subtle);">
+                <div class="sidebar-user-avatar" id="sidebarUserAvatar" style="width: 32px; height: 32px; border-radius: 50%; background: rgba(56, 182, 164, 0.15); color: var(--accent-teal); display: flex; align-items: center; justify-content: center; font-weight: 700;">U</div>
+                <div style="flex: 1; overflow: hidden;">
+                    <div style="font-size: 13px; font-weight: 600; text-overflow: ellipsis; overflow: hidden;" id="sidebarUserName">User</div>
+                    <a href="#" id="sidebarLogoutBtn" style="font-size: 11px; color: var(--accent-teal);">Logout</a>
+                </div>
+            </div>
+
+            <a href="login.html" class="btn btn-outline btn-sm" id="sidebarAuthLink" style="width: 100%;">
+                <i class="fa-solid fa-right-to-bracket"></i> Sign In
+            </a>
+        </div>
+    </aside>
+
+    <!-- Sidebar Backdrop Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Dashboard Main Wrap -->
+    <div class="app-container">
+        
+        <!-- Header Banner with Photo Showcase -->
+        <div style="display: grid; grid-template-columns: 1.3fr 0.7fr; gap: 24px; align-items: center; margin-bottom: 32px;">
+            <div>
+                <span class="label-caps">HEALTH COMMAND CENTER</span>
+                <h1 style="font-size: 32px; margin-top: 8px;">WELCOME BACK, <span id="userName" class="text-teal">USER</span></h1>
+                <p>Your latest health assessments, risk history, and personal insights.</p>
+                <div style="margin-top: 16px;">
+                    <a href="health-form.html" class="btn btn-primary">
+                        <i class="fa-solid fa-plus"></i> New Assessment
+                    </a>
+                </div>
+            </div>
+            <div class="clinical-photo-frame" style="height: 170px;">
+                <img src="assets/images/medical-flatlay.png" alt="Multi-Dimensional Clinical Workspace" loading="lazy">
+                <div class="clinical-photo-overlay" style="padding: 14px;">
+                    <span class="clinical-photo-badge" style="font-size: 10px;"><i class="fa-solid fa-gauge-high"></i> ACTIVE INTELLIGENCE</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4 Real Metric Cards -->
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-label">01 — TOTAL REPORTS</div>
+                <div class="metric-value" id="statTotal">0</div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-label">02 — LAST ASSESSMENT</div>
+                <div class="metric-value" id="statLast" style="font-size: 22px; font-weight: 700;">—</div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-label">03 — LATEST RISK</div>
+                <div class="metric-value" id="statRisk">—</div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-label">04 — HEALTH SCORE</div>
+                <div class="metric-value text-teal" id="statScore">—</div>
+            </div>
+        </div>
+
+        <!-- Health Score Centerpiece Ring Card -->
+        <div class="score-centerpiece-card">
+            <div class="score-ring-wrap">
+                <svg>
+                    <circle class="score-ring-circle-bg" cx="90" cy="90" r="70"></circle>
+                    <circle class="score-ring-circle-val" id="scoreCircleVal" cx="90" cy="90" r="70"></circle>
+                </svg>
+                <div class="score-number-inside">
+                    <div class="num" id="centerScoreNum">--</div>
+                    <div class="lbl" id="centerScoreLbl">GOOD</div>
+                </div>
+            </div>
+
+            <div style="max-width: 500px;">
+                <span class="label-caps">LIFESTYLE INTELLIGENCE SCORE</span>
+                <h2 style="font-size: 28px; margin: 8px 0 12px;">Overall Health Status Indicator</h2>
+                <p style="font-size: 14px; color: var(--text-secondary); line-height: 1.6;">
+                    Calculated from your submitted blood pressure, blood sugar, sleep duration, stress levels, lifestyle habits, and reported symptoms.
+                </p>
+            </div>
+        </div>
+
+        <!-- Throwable Report Deck & Timeline -->
+        <div style="margin-top: 50px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                <div>
+                    <span class="label-caps">ASSESSMENT HISTORY</span>
+                    <h3 style="font-size: 22px;">Recent Reports Deck</h3>
+                </div>
+                <span style="font-size: 12px; color: var(--text-muted);">Swipe deck cards or use Left/Right arrow keys</span>
+            </div>
+
+            <!-- Throwable Deck Container -->
+            <div class="report-deck-wrapper">
+                <div class="deck-cards-container" id="deckCardsContainer">
+                    <!-- Loaded dynamically by dashboard.js -->
+                </div>
+            </div>
+
+            <!-- Full Timeline List -->
+            <div style="margin-top: 60px;">
+                <h3 style="font-size: 20px; margin-bottom: 20px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 12px;">
+                    Full Report Timeline
+                </h3>
+                <div class="timeline-list" id="timelineListWrap">
+                    <!-- Loaded dynamically -->
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/api-config.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="script.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

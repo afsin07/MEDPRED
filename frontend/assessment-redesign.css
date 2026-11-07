@@ -1,0 +1,376 @@
+/* ================================================================
+   MediPredict Assessment + Report Redesign
+   Wide, readable, dashboard-style UI. Loaded after app.css.
+   ================================================================ */
+:root{
+  --mp-bg:#060a0c;
+  --mp-surface:#0d1418;
+  --mp-surface-2:#10191e;
+  --mp-border:#243138;
+  --mp-border-soft:#1a252b;
+  --mp-text:#eef5f3;
+  --mp-muted:#9ba9a9;
+  --mp-teal:#38b6a4;
+  --mp-teal-dark:#103a37;
+  --mp-blue:#4ea7d8;
+  --mp-amber:#e7a84b;
+  --mp-red:#e96a62;
+}
+
+body{background:radial-gradient(circle at 15% 0%,rgba(56,182,164,.05),transparent 34%),var(--mp-bg);}
+.app-container.assessment-app-container,
+.app-container.report-app-container{
+  width:min(88vw,1400px)!important;
+  max-width:1400px!important;
+  margin:0 auto!important;
+  padding-left:0!important;
+  padding-right:0!important;
+}
+
+/* Assessment hero */
+.assessment-app-container > div:first-child{
+  gap:clamp(28px,4vw,64px)!important;
+  margin-bottom:30px!important;
+}
+.assessment-app-container > div:first-child > div:first-child h1{
+  max-width:720px;
+  line-height:1.08!important;
+  font-size:clamp(34px,3.4vw,54px)!important;
+}
+.assessment-app-container > div:first-child > div:first-child p{
+  max-width:760px;
+  color:#aebaba;
+  line-height:1.65;
+}
+.clinical-photo-frame{box-shadow:0 18px 50px rgba(0,0,0,.25);}
+
+/* Notice */
+.disclaimer-box{
+  background:linear-gradient(90deg,rgba(56,182,164,.075),rgba(56,182,164,.025));
+  border-color:rgba(56,182,164,.4)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.025);
+  font-size:14px;
+  line-height:1.65;
+}
+
+/* Wide stages */
+.assessment-stage-card{
+  width:100%;
+  padding:clamp(26px,3vw,40px)!important;
+  margin-bottom:24px!important;
+  background:linear-gradient(145deg,#0d1418,#0a1013)!important;
+  border-color:#202c32!important;
+  box-shadow:0 18px 55px rgba(0,0,0,.16);
+}
+.stage-title{font-size:28px!important;margin-bottom:28px!important;}
+.form-grid-2{
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:26px 30px!important;
+}
+.form-group label,.range-header label{
+  color:#c2cdcb!important;
+  font-size:12px!important;
+  letter-spacing:.09em;
+}
+
+/* Selects: dark native option list, high contrast */
+.input-box select{
+  color:#f3f7f6!important;
+  background:#0b1216!important;
+  border:1px solid #26343a!important;
+  min-height:52px;
+  color-scheme:dark;
+  font-size:15px!important;
+}
+.input-box select:focus{
+  border-color:var(--mp-teal)!important;
+  box-shadow:0 0 0 2px rgba(56,182,164,.16)!important;
+}
+.input-box select option{
+  background:#0b1216!important;
+  color:#f3f7f6!important;
+  padding:12px!important;
+}
+.input-box select option:checked,
+.input-box select option:hover{
+  background:#1d5e58!important;
+  color:#fff!important;
+}
+.input-box i{z-index:2;pointer-events:none;}
+
+/* Sliders */
+.range-slider-group{padding-top:4px;}
+.range-slider-group[style*="span 2"]{grid-column:1 / -1!important;}
+.range-header{margin-bottom:8px;}
+.range-header .val-display{font-size:18px!important;color:var(--mp-teal)!important;}
+input[type="range"]{
+  height:7px!important;
+  background:#26353b!important;
+  border-radius:999px!important;
+  accent-color:var(--mp-teal);
+  cursor:pointer;
+}
+input[type="range"]::-webkit-slider-runnable-track{height:7px;background:linear-gradient(90deg,var(--mp-teal),#2b454b);border-radius:999px;}
+input[type="range"]::-webkit-slider-thumb{width:21px!important;height:21px!important;margin-top:-7px;background:#48c5b2!important;border:3px solid #092522;box-shadow:0 0 0 2px rgba(56,182,164,.25);}
+input[type="range"]::-moz-range-track{height:7px;background:#26353b;border-radius:999px;}
+input[type="range"]::-moz-range-progress{height:7px;background:var(--mp-teal);border-radius:999px;}
+input[type="range"]::-moz-range-thumb{width:17px;height:17px;background:#48c5b2;border:3px solid #092522;}
+
+/* Checkbox panels */
+.checkbox-group-grid{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))!important;gap:14px!important;}
+.custom-checkbox-label{padding:15px 17px!important;background:#0b1216!important;border-color:#26343a!important;}
+.custom-checkbox-label:hover,.custom-checkbox-label:has(input:checked){border-color:rgba(56,182,164,.65)!important;background:rgba(56,182,164,.07)!important;}
+
+/* Submission area */
+#formSubmitBtn{min-width:240px;padding:14px 24px;}
+
+/* ================================================================
+   REPORT DASHBOARD
+   ================================================================ */
+.report-app-container{padding-bottom:100px!important;}
+.report-paper{
+  width:100%!important;
+  max-width:none!important;
+  padding:clamp(28px,3vw,46px)!important;
+  background:linear-gradient(145deg,#0c1317,#080e11)!important;
+  border:1px solid #202d33!important;
+  border-radius:24px!important;
+  box-shadow:0 25px 70px rgba(0,0,0,.24);
+}
+.report-header-bar{margin-bottom:26px!important;}
+.report-risk-banner{display:grid!important;grid-template-columns:180px minmax(0,1fr);gap:28px!important;align-items:center!important;padding:28px!important;}
+
+/* Dashboard grids generated by report.js */
+.mp-report-grid{display:grid;gap:16px;margin:22px 0;}
+.mp-report-grid.top{grid-template-columns:minmax(220px,.8fr) minmax(380px,1.7fr) minmax(260px,1fr);}
+.mp-report-grid.bottom{grid-template-columns:1fr 1.2fr 1.35fr;}
+.mp-panel{background:linear-gradient(145deg,#0d151a,#0b1216);border:1px solid #202d33;border-radius:16px;padding:20px;min-width:0;}
+.mp-panel h4{margin:0 0 14px;color:#c6d1d0;font-size:12px;text-transform:uppercase;letter-spacing:.1em;}
+.mp-score-card{display:flex;flex-direction:column;justify-content:center;min-height:190px;}
+.mp-score{font-size:64px;line-height:1;font-weight:800;color:var(--mp-teal);letter-spacing:-.04em;}
+.mp-score span{font-size:20px;color:#71807f;font-weight:600;}
+.mp-score-caption{margin-top:12px;color:#a5b2b0;font-size:13px;line-height:1.55;}
+.mp-donut-layout{display:grid;grid-template-columns:150px 1fr;align-items:center;gap:22px;}
+.mp-donut{width:150px;height:150px;display:block;}
+.mp-legend{display:flex;flex-direction:column;gap:10px;}
+.mp-legend-row{display:flex;align-items:center;justify-content:space-between;gap:16px;font-size:13px;color:#aeb9b8;}
+.mp-dot{width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:8px;background:var(--mp-teal);}
+.mp-dot.amber{background:var(--mp-amber)}.mp-dot.red{background:var(--mp-red)}
+.mp-insights{display:grid;gap:9px;}
+.mp-insight{display:flex;gap:10px;align-items:flex-start;padding:11px 12px;background:#111b20;border:1px solid #1e2b31;border-radius:10px;color:#bdc7c5;font-size:12px;line-height:1.45;}
+.mp-insight i{color:var(--mp-teal);margin-top:2px;}
+.mp-bar-row{margin:14px 0;}
+.mp-bar-head{display:flex;justify-content:space-between;gap:16px;font-size:12px;color:#b8c3c1;margin-bottom:7px;}
+.mp-bar-track{height:7px;background:#1c292e;border-radius:999px;overflow:hidden;}
+.mp-bar-fill{height:100%;background:linear-gradient(90deg,#238f83,var(--mp-teal));border-radius:999px;transition:width .8s ease;}
+.mp-vitals{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+.mp-vital{padding:14px;background:#111a1f;border:1px solid #202e34;border-radius:12px;}
+.mp-vital-label{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:#758583;}
+.mp-vital-value{margin-top:7px;color:#eaf1ef;font-weight:700;font-size:16px;}
+.mp-vital-sub{font-size:11px;color:var(--mp-teal);margin-top:3px;}
+.mp-recommendations{display:grid;gap:10px;}
+.mp-recommendation{display:flex;gap:10px;color:#bdc8c6;font-size:12px;line-height:1.5;}
+.mp-recommendation i{color:var(--mp-teal);margin-top:3px;}
+.mp-mini-label{color:#748381;font-size:11px;text-transform:uppercase;letter-spacing:.08em;}
+.mp-heatline{height:2px;background:linear-gradient(90deg,transparent,var(--mp-teal),transparent);opacity:.6;margin:20px 0;}
+
+@media (max-width:1100px){
+  .mp-report-grid.top,.mp-report-grid.bottom{grid-template-columns:1fr 1fr;}
+  .mp-report-grid.top .mp-panel:nth-child(2){grid-column:span 2;}
+}
+@media (max-width:760px){
+  .app-container.assessment-app-container,.app-container.report-app-container{width:min(92vw,1400px)!important;}
+  .assessment-app-container > div:first-child{grid-template-columns:1fr!important;}
+  .form-grid-2{grid-template-columns:1fr!important;}
+  .range-slider-group[style*="span 2"]{grid-column:auto!important;}
+  .mp-report-grid.top,.mp-report-grid.bottom{grid-template-columns:1fr;}
+  .mp-report-grid.top .mp-panel:nth-child(2){grid-column:auto;}
+  .report-risk-banner{grid-template-columns:1fr!important;}
+  .mp-donut-layout{grid-template-columns:1fr;justify-items:center;}
+  .mp-legend{width:100%;}
+  .mp-vitals{grid-template-columns:1fr;}
+}
+/* ================================================================
+   PRINT / SAVE-AS-PDF LAYOUT (A4, light theme, no cut-off cards)
+   ================================================================ */
+.print-title{display:none;}
+@page{size:A4;margin:10mm;}
+@media print{
+  :root,[data-theme]{
+    --bg-primary:#fff;--surface:#fff;--surface-elevated:#f3f7f5;
+    --text-primary:#0f1714;--text-secondary:#3d4944;--text-muted:#5f6b66;
+    --accent-teal:#0d7f74;--border-subtle:#d5dedb;
+  }
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  html,body{background:#fff!important;color:#111!important;min-height:0!important;height:auto!important;}
+  .navbar,.sidebar-drawer,.sidebar-overlay,.report-actions,.footer,.btn,
+  .clinical-photo-frame{display:none!important;}
+  .app-container,.app-container.assessment-app-container,.app-container.report-app-container{width:100%!important;max-width:none!important;margin:0!important;padding:0!important;min-height:0!important;}
+
+  .report-paper{box-shadow:none!important;border:0!important;border-radius:0!important;background:#fff!important;color:#111!important;padding:0!important;}
+  .report-header-bar{display:flex!important;justify-content:space-between;align-items:flex-end;margin:0 0 10px!important;padding-bottom:10px;border-bottom:2px solid #0d7f74;}
+  .report-header-bar .logo{font-size:24px!important;color:#0f1714!important;}
+  .report-header-bar div{color:#0f1714!important;}
+  .print-title{display:block;margin:0 0 14px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#0d7f74;font-weight:700;}
+
+  .report-risk-banner{display:grid!important;grid-template-columns:190px minmax(0,1fr)!important;gap:22px!important;align-items:center!important;
+    padding:12px 16px!important;margin:0 0 10px!important;background:#f3f9f7!important;border:1px solid #cfe3de!important;border-radius:12px!important;
+    break-inside:avoid;page-break-inside:avoid;}
+  .report-risk-banner h2{color:#0f1714!important;font-size:20px!important;}
+  .report-risk-banner p{color:#3d4944!important;}
+  .risk-tag{border-width:1px!important;font-weight:700!important;}
+  .risk-tag.risk-high{background:#fde8e6!important;color:#b3261e!important;border-color:#e9a9a4!important;}
+  .risk-tag.risk-medium{background:#fff3dc!important;color:#8a5a00!important;border-color:#e8c680!important;}
+  .risk-tag.risk-low{background:#e0f4f0!important;color:#0d6b62!important;border-color:#9fd5cc!important;}
+
+  .mp-report-grid,.mp-report-grid.top,.mp-report-grid.bottom{display:grid!important;grid-template-columns:1fr 1fr!important;gap:10px!important;margin:0 0 10px!important;}
+  .mp-report-grid.top .mp-panel:nth-child(2){grid-column:auto!important;}
+  .mp-report-grid .mp-panel:nth-child(3){grid-column:1 / -1;}
+  .mp-panel{background:#fff!important;border:1px solid #d5dedb!important;border-radius:10px!important;padding:11px 12px!important;
+    break-inside:avoid;page-break-inside:avoid;min-width:0;}
+  .mp-panel h4{color:#3d4944!important;margin-bottom:10px!important;}
+  .mp-score-card{min-height:0!important;}
+  .mp-score{font-size:40px!important;color:#0d7f74!important;}
+  .mp-score span{color:#5f6b66!important;}
+  .mp-score-caption{color:#3d4944!important;font-size:12px!important;}
+
+  .mp-donut-layout{grid-template-columns:96px 1fr!important;gap:14px!important;}
+  .mp-donut{width:96px!important;height:96px!important;}
+  .mp-donut circle:first-child{stroke:#dfe9e6!important;}
+  .mp-donut circle:nth-child(2){stroke:#0d7f74!important;}
+  .mp-donut text{fill:#0f1714!important;}
+  .mp-donut text:last-child{fill:#5f6b66!important;}
+  .mp-legend-row{color:#3d4944!important;font-size:12px!important;}
+  .mp-dot{background:#0d7f74!important;}.mp-dot.amber{background:#e0902a!important;}.mp-dot.red{background:#d9453b!important;}
+
+  .mp-insights{grid-template-columns:1fr 1fr!important;gap:8px!important;}
+  .mp-insight{background:#f6f9f8!important;border:1px solid #dfe9e6!important;color:#2b3631!important;font-size:12px!important;}
+  .mp-insight i,.mp-recommendation i{color:#0d7f74!important;}
+
+  .mp-bar-head{color:#2b3631!important;}
+  .mp-bar-track{background:#e3ebe9!important;}
+  .mp-bar-fill{background:#0d7f74!important;}
+  .mp-vitals{grid-template-columns:repeat(3,1fr)!important;gap:8px!important;}
+  .mp-vital{background:#f6f9f8!important;border:1px solid #dfe9e6!important;padding:10px!important;}
+  .mp-vital-label{color:#5f6b66!important;}
+  .mp-vital-value{color:#0f1714!important;font-size:14px!important;}
+  .mp-vital-sub{color:#0d6b62!important;}
+  .mp-heatline{background:#cfe3de!important;opacity:1!important;margin:10px 0!important;}
+  .mp-bar-row{margin:9px 0!important;}
+  .mp-insight{padding:8px 10px!important;}
+  .mp-panel h4{margin-bottom:8px!important;}
+  .mp-recommendations{grid-template-columns:1fr 1fr;gap:8px 16px!important;}
+  .mp-recommendation{color:#2b3631!important;}
+
+  .disclaimer-box{background:#f3f9f7!important;border:1px solid #cfe3de!important;box-shadow:none!important;color:#2b3631!important;
+    font-size:11px!important;margin-top:4px!important;break-inside:avoid;page-break-inside:avoid;}
+  .disclaimer-box strong{color:#0f1714!important;}
+}
+
+/* ================================================================
+   MOBILE / TABLET RESPONSIVE POLISH
+   Keeps the desktop design intact and adapts the assessment/report
+   for touch screens without horizontal scrolling.
+   ================================================================ */
+@media (max-width: 768px){
+  .app-container.assessment-app-container,
+  .app-container.report-app-container{
+    width:calc(100% - 28px)!important;
+    max-width:none!important;
+    padding-top:calc(var(--nav-height) + 22px)!important;
+    padding-bottom:48px!important;
+  }
+
+  .assessment-app-container > div:first-child{
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    gap:20px!important;
+    margin-bottom:22px!important;
+  }
+  .assessment-app-container > div:first-child > div:first-child h1{
+    font-size:clamp(30px,8vw,40px)!important;
+    line-height:1.08!important;
+    max-width:none!important;
+  }
+  .assessment-app-container > div:first-child > div:first-child p{
+    font-size:14px!important;
+    line-height:1.6!important;
+  }
+  .clinical-photo-frame{
+    width:100%!important;
+    max-width:none!important;
+    min-height:190px!important;
+  }
+
+  .disclaimer-box{
+    margin:0 0 20px!important;
+    padding:16px!important;
+    font-size:13px!important;
+  }
+
+  .assessment-stage-card{
+    padding:22px 18px!important;
+    margin-bottom:18px!important;
+    border-radius:18px!important;
+  }
+  .stage-badge{font-size:11px!important;}
+  .stage-title{
+    font-size:24px!important;
+    line-height:1.2!important;
+    margin-bottom:22px!important;
+  }
+  .form-grid-2{grid-template-columns:1fr!important;gap:18px!important;}
+  .range-slider-group[style*="span 2"]{grid-column:auto!important;}
+
+  .form-group label,.range-header label{
+    font-size:11px!important;
+    line-height:1.35!important;
+  }
+  .input-box select,
+  .input-box input,
+  .input-box textarea{
+    min-height:52px!important;
+    font-size:14px!important;
+  }
+  .input-box select option{font-size:14px!important;}
+
+  .range-slider-group{gap:9px!important;padding-top:2px!important;}
+  .range-header{gap:12px!important;margin-bottom:8px!important;}
+  .range-header .val-display{font-size:17px!important;white-space:nowrap;}
+  input[type="range"]{height:8px!important;min-height:32px;}
+  input[type="range"]::-webkit-slider-runnable-track{height:8px!important;}
+  input[type="range"]::-webkit-slider-thumb{width:24px!important;height:24px!important;margin-top:-8px!important;}
+  input[type="range"]::-moz-range-track{height:8px!important;}
+  input[type="range"]::-moz-range-thumb{width:20px!important;height:20px!important;}
+
+  .checkbox-group-grid{grid-template-columns:1fr!important;gap:10px!important;}
+  .custom-checkbox-label{min-height:48px!important;padding:13px 14px!important;}
+  #formSubmitBtn{width:100%!important;min-width:0!important;}
+
+  /* Report: one-column, touch-friendly analytics */
+  .report-paper{padding:20px 16px!important;border-radius:18px!important;}
+  .report-header-bar{margin-bottom:20px!important;}
+  .report-risk-banner{
+    grid-template-columns:1fr!important;
+    gap:16px!important;
+    padding:20px!important;
+  }
+  .mp-report-grid.top,.mp-report-grid.bottom{grid-template-columns:1fr!important;gap:12px!important;margin:16px 0!important;}
+  .mp-report-grid.top .mp-panel:nth-child(2){grid-column:auto!important;}
+  .mp-panel{padding:16px!important;border-radius:14px!important;}
+  .mp-score{font-size:56px!important;}
+  .mp-donut-layout{grid-template-columns:1fr!important;justify-items:center!important;gap:16px!important;}
+  .mp-donut{width:132px!important;height:132px!important;}
+  .mp-legend{width:100%!important;}
+  .mp-vitals{grid-template-columns:repeat(2,minmax(0,1fr))!important;}
+  .mp-bar-head{font-size:11px!important;}
+  .mp-insight,.mp-recommendation{font-size:12px!important;}
+}
+
+@media (max-width: 430px){
+  .app-container.assessment-app-container,
+  .app-container.report-app-container{width:calc(100% - 20px)!important;}
+  .assessment-stage-card{padding:18px 14px!important;}
+  .stage-title{font-size:22px!important;}
+  .mp-vitals{grid-template-columns:1fr!important;}
+}

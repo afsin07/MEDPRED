@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediPredict — AI Health Intelligence Platform</title>
+    <meta name="description" content="Understand your health. See the patterns. Make better decisions with MediPredict AI health assessment platform.">
+    
+    <!-- Google Fonts & Font Awesome -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    
+    <!-- Design System Styles -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="app.css">
+</head>
+<body>
+
+    <!-- ==================== HYBRID TOP BAR ==================== -->
+    <nav class="navbar" id="mainNavbar">
+        <div class="nav-left-group">
+            <button class="sidebar-toggle-btn" id="sidebarToggle" title="Toggle Full Feature Sidebar">
+                <i class="fa-solid fa-bars-staggered"></i>
+            </button>
+            <a href="index.html" class="logo">
+                Medi<span class="text-teal">Predict</span>
+            </a>
+        </div>
+
+        <!-- Essential Top Nav Links Only -->
+        <ul class="nav-links-essential">
+            <li><a href="index.html" class="active">Home</a></li>
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="health-form.html">New Assessment</a></li>
+        </ul>
+
+        <div class="nav-actions">
+            <a href="health-form.html" class="btn btn-primary btn-sm">Start Assessment</a>
+            <a href="login.html" class="btn btn-outline btn-sm" id="navSignInLink">Sign In</a>
+        </div>
+    </nav>
+
+    <!-- ==================== CLOSABLE SIDEBAR DRAWER (ALL FEATURES) ==================== -->
+    <aside class="sidebar-drawer" id="sidebarDrawer">
+        <div>
+            <div class="sidebar-drawer-header">
+                <a href="index.html" class="logo" style="font-size: 20px;">
+                    Medi<span class="text-teal">Predict</span>
+                </a>
+                <button class="sidebar-close-btn" id="sidebarCloseBtn" title="Close Sidebar">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="sidebar-section-label">NAVIGATION</div>
+            <ul class="sidebar-feature-list">
+                <li class="sidebar-feature-item">
+                    <a href="index.html" class="active">
+                        <i class="fa-solid fa-house"></i>
+                        <span>Home Page</span>
+                    </a>
+                </li>
+                <li class="sidebar-feature-item">
+                    <a href="dashboard.html">
+                        <i class="fa-solid fa-gauge-high"></i>
+                        <span>User Dashboard</span>
+                    </a>
+                </li>
+                <li class="sidebar-feature-item">
+                    <a href="health-form.html">
+                        <i class="fa-solid fa-notes-medical"></i>
+                        <span>New Health Assessment</span>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="sidebar-section-label">INTELLIGENCE PLATFORM</div>
+            <ul class="sidebar-feature-list">
+                <li class="sidebar-feature-item">
+                    <a href="#assessment">
+                        <i class="fa-solid fa-list-check"></i>
+                        <span>Health Categories</span>
+                    </a>
+                </li>
+                <li class="sidebar-feature-item">
+                    <a href="#workflow">
+                        <i class="fa-solid fa-diagram-project"></i>
+                        <span>Platform Workflow</span>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="sidebar-section-label">ADMINISTRATION</div>
+            <ul class="sidebar-feature-list">
+                <li class="sidebar-feature-item">
+                    <a href="admin.html">
+                        <i class="fa-solid fa-shield-halved"></i>
+                        <span>Admin Command Center</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="sidebar-drawer-footer">
+            <a href="health-form.html" class="btn btn-primary btn-sm" style="width: 100%;">
+                <i class="fa-solid fa-plus"></i> Start Assessment
+            </a>
+
+            <div class="sidebar-user-info" id="sidebarUserInfo" style="display: none; align-items: center; gap: 12px; padding: 10px; background: var(--surface); border-radius: var(--radius-sm); border: 1px solid var(--border-subtle);">
+                <div class="sidebar-user-avatar" id="sidebarUserAvatar" style="width: 32px; height: 32px; border-radius: 50%; background: rgba(56, 182, 164, 0.15); color: var(--accent-teal); display: flex; align-items: center; justify-content: center; font-weight: 700;">U</div>
+                <div style="flex: 1; overflow: hidden;">
+                    <div style="font-size: 13px; font-weight: 600; text-overflow: ellipsis; overflow: hidden;" id="sidebarUserName">User</div>
+                    <a href="#" id="sidebarLogoutBtn" style="font-size: 11px; color: var(--accent-teal);">Logout</a>
+                </div>
+            </div>
+
+            <a href="login.html" class="btn btn-outline btn-sm" id="sidebarAuthLink" style="width: 100%;">
+                <i class="fa-solid fa-right-to-bracket"></i> Sign In
+            </a>
+        </div>
+    </aside>
+
+    <!-- Sidebar Backdrop Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- ==================== HERO — HEALTH INTELLIGENCE PORTAL ==================== -->
+    <section class="hero-portal-container" id="heroPortalContainer">
+        <div class="hero-sticky-stage">
+            
+            <!-- Opaque Sliding Left Panel -->
+            <div class="portal-panel portal-panel-left" id="portalLeft">
+                <div class="hero-panel-content-left">
+                    <span class="hero-portal-tag"><i class="fa-solid fa-bolt"></i> AI HEALTH INTELLIGENCE</span>
+                    <div class="wordmark-large">
+                        <span id="wordmarkMedi" class="wordmark-medi">Medi</span>
+                    </div>
+                    <div class="hero-panel-chip">
+                        <i class="fa-solid fa-heart-pulse"></i> <span>Vitals & Biomarker Analysis</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Opaque Sliding Right Panel -->
+            <div class="portal-panel portal-panel-right" id="portalRight">
+                <div class="hero-panel-content-right">
+                    <span class="hero-portal-tag"><i class="fa-solid fa-shield-halved"></i> CLINICAL RULES ENGINE</span>
+                    <div class="wordmark-large">
+                        <span id="wordmarkPredict" class="wordmark-predict">Predict</span>
+                    </div>
+                    <div class="hero-panel-chip">
+                        <i class="fa-solid fa-brain"></i> <span>Risk & Guidance Engine</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scroll Hint Pill floating at bottom of Hero Cover -->
+            <div class="hero-scroll-pill" id="heroScrollPill">
+                <span>SCROLL TO UNLOCK PORTAL</span>
+                <i class="fa-solid fa-chevron-down"></i>
+            </div>
+
+            <!-- Central AI Health Intelligence Visualization Revealed on Scroll -->
+            <div class="hero-viz-backdrop" id="heroVizBackdrop" style="opacity: 0; pointer-events: none;">
+                <!-- Abstract AI Graphics Ring -->
+                <div class="hero-viz-graphics">
+                    <div class="pulse-node" style="top: 20%; left: 30%;"></div>
+                    <div class="pulse-node" style="bottom: 25%; right: 35%;"></div>
+                    <div class="pulse-node" style="top: 60%; left: 75%;"></div>
+                </div>
+
+                <div class="hero-content-wrap">
+                    <span class="label-caps">AI HEALTH INTELLIGENCE PLATFORM</span>
+                    <h1>Understand Your <span class="text-teal">Health.</span><br>Before It Becomes a Problem.</h1>
+                    <p>
+                        MediPredict transforms simple health and lifestyle information into an understandable assessment, risk level, health score, and personalized recommendations.
+                    </p>
+                    <div class="hero-cta-group">
+                        <a href="health-form.html" class="btn btn-primary">
+                            Start Assessment <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                        <a href="#statement" class="btn btn-secondary">
+                            Explore Platform <i class="fa-solid fa-chevron-down"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ==================== PURPOSE SECTION ==================== -->
+    <section class="design-section purpose-section" id="purpose">
+        <div class="design-section-inner purpose-grid">
+            <div class="purpose-copy reveal-up">
+                <span class="label-caps">OUR PURPOSE</span>
+                <h2>Healthcare data is everywhere.<br>Understanding it <span class="text-teal">shouldn't be complicated.</span></h2>
+                <p>Conventional checkups produce isolated numbers. MediPredict evaluates your vitals, lifestyle habits, and symptoms as an interconnected system to bring clarity to your personal health.</p>
+                <div class="purpose-points">
+                    <span><i class="fa-solid fa-circle-check"></i> Multi-Parameter Analysis</span>
+                    <span><i class="fa-solid fa-circle-check"></i> Real-time Risk Scoring</span>
+                </div>
+            </div>
+            <div class="purpose-visual reveal-up">
+                <article class="purpose-image-card">
+                    <img src="assets/images/stethoscope-report.png" alt="Clinical report and stethoscope" loading="lazy">
+                    <div class="image-card-gradient"></div>
+                    <div class="image-card-content">
+                        <span class="image-badge"><i class="fa-solid fa-user-doctor"></i> MEDICAL INTELLIGENCE</span>
+                        <h3>Clinical Standards Meets AI Precision</h3>
+                        <p>Empowering individuals with evidence-based health indicator insights.</p>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== HOW IT WORKS ==================== -->
+    <section class="design-section workflow-design-section" id="workflow">
+        <div class="design-section-inner">
+            <div class="workflow-heading reveal-up">
+                <div>
+                    <span class="label-caps">HOW IT WORKS</span>
+                    <h2>Four Steps to Health Clarity</h2>
+                    <p>A seamless transition from raw health inputs to actionable intelligence.</p>
+                </div>
+                <div class="live-intelligence-card">
+                    <div class="live-card-head"><span>LIVE INTELLIGENCE</span><span class="live-status"><i class="fa-solid fa-circle"></i> ACTIVE</span></div>
+                    <div class="live-wave"><svg viewBox="0 0 220 48" preserveAspectRatio="none"><path d="M0 27 C12 27 14 10 25 10 S38 40 50 40 62 18 73 18 82 31 94 31 106 8 118 8 130 39 142 39 154 17 166 17 178 28 190 28 202 12 220 12"/></svg></div>
+                    <div class="live-row"><span>Signal quality</span><strong>98.4%</strong></div><div class="live-row"><span>AI engine</span><strong>Ready</strong></div>
+                </div>
+            </div>
+            <div class="steps-grid">
+                <article class="step-card reveal-up"><span class="step-number">01</span><h3>Your Information</h3><p>Provide key vitals, blood pressure, glucose, sleep duration, stress levels, and lifestyle habits in a guided assessment.</p></article>
+                <article class="step-card featured reveal-up"><span class="step-number">02</span><h3>AI Analysis</h3><p>MediPredict processes your submitted health data through our deterministic clinical scoring rules engine.</p></article>
+                <article class="step-card reveal-up"><span class="step-number">03</span><h3>Risk Assessment</h3><p>Receive your personalized 100-point Health Score along with clear Low, Medium, or High risk categorization.</p></article>
+                <article class="step-card reveal-up"><span class="step-number">04</span><h3>Personalized Insights</h3><p>Explore customized lifestyle guidance and actionable steps designed to address flagged health patterns.</p></article>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== HEALTH ASSESSMENT ==================== -->
+    <section class="design-section assessment-design-section" id="assessment">
+        <div class="design-section-inner">
+            <div class="assessment-heading reveal-up"><span class="label-caps">HEALTH ASSESSMENT</span><h2>Your health story. One intelligent assessment.</h2><p>A structured multi-dimensional evaluation covering key physiological and lifestyle parameters.</p></div>
+            <div class="assessment-grid">
+                <article class="assessment-card reveal-up"><div class="assessment-icon"><i class="fa-solid fa-heart-pulse"></i></div><h3>Vitals &amp; Biomarkers</h3><p>Blood pressure levels and fasting blood sugar monitoring for early risk indicators.</p></article>
+                <article class="assessment-card reveal-up"><div class="assessment-icon"><i class="fa-solid fa-moon"></i></div><h3>Sleep &amp; Stress</h3><p>Daily sleep duration tracking and perceived stress level quantification on a 10-point scale.</p></article>
+                <article class="assessment-card reveal-up"><div class="assessment-icon"><i class="fa-solid fa-person-running"></i></div><h3>Lifestyle Habits</h3><p>Evaluation of physical activity levels, dietary quality, smoking, and alcohol consumption.</p></article>
+                <article class="assessment-card reveal-up"><div class="assessment-icon"><i class="fa-solid fa-notes-medical"></i></div><h3>Symptom Tracking</h3><p>Identification of experienced symptom patterns to highlight potential health trends.</p></article>
+            </div>
+            <div class="assessment-cta reveal-up"><a href="health-form.html" class="btn btn-primary">Start Your Health Assessment <i class="fa-solid fa-arrow-right"></i></a></div>
+        </div>
+    </section>
+
+    <!-- ==================== AI ENGINE INSIGHTS ==================== -->
+    <section class="design-section insights-design-section" id="insights">
+        <div class="design-section-inner insights-grid">
+            <div class="insights-copy reveal-up"><span class="label-caps">AI ENGINE INSIGHTS</span><h2>From health data<br>to <span class="text-teal">meaningful insight.</span></h2><p>When you submit an assessment, MediPredict analyzes your exact metrics against risk parameters to generate real health scores, risk levels, and targeted recommendations.</p><a href="health-form.html" class="btn btn-primary">Try Live Assessment <i class="fa-solid fa-arrow-right"></i></a></div>
+            <div class="prediction-demo reveal-up">
+                <div class="prediction-head"><span><i class="fa-solid fa-microchip"></i> LIVE PREDICTION DEMO</span><span class="risk-pill"><i class="fa-solid fa-circle"></i> Low Risk</span></div>
+                <div class="prediction-main"><div class="score-ring"><span>88</span></div><div><span class="muted-label">OVERALL HEALTH SCORE</span><h3>Optimal Wellness Pattern</h3></div></div>
+                <div class="prediction-check"><i class="fa-solid fa-check"></i> Blood Pressure &amp; Sugar within target</div><div class="prediction-check"><i class="fa-solid fa-check"></i> Sleep duration matches clinical guidelines</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="footer">
+        <div class="footer-top">
+            <div class="footer-brand">
+                <div class="logo">
+                    Medi<span class="text-teal">Predict</span>
+                </div>
+                <p>AI-powered health assessment platform for educational and demonstration purposes.</p>
+            </div>
+
+            <div class="footer-links">
+                <div class="footer-col">
+                    <h5>Platform</h5>
+                    <ul>
+                        <li><a href="health-form.html">Start Assessment</a></li>
+                        <li><a href="dashboard.html">User Dashboard</a></li>
+                        <li><a href="login.html">Sign In</a></li>
+                        <li><a href="register.html">Create Account</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h5>System</h5>
+                    <ul>
+                        <li><a href="admin.html">Admin Command Center</a></li>
+                        <li><a href="#assessment">Health Assessment</a></li>
+                        <li><a href="#workflow">Workflow</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-disclaimer">
+            MediPredict is an educational/demo health assessment platform and does not provide medical diagnosis or replace professional medical advice. Always consult a qualified physician for healthcare decisions.
+        </div>
+
+        <div class="footer-bottom">
+            <span>© 2026 MediPredict. All rights reserved.</span>
+            <span>Clinical-Tech UI Redesign</span>
+        </div>
+
+        <!-- Cropped Oversized Wordmark Below Viewport -->
+        <div class="footer-oversized-wordmark">
+            MediPredict
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/api-config.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
