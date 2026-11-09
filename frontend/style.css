@@ -4,7 +4,7 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap');
 
-:root, [data-theme="dark"] {
+:root {
     /* Color Palette — Dark Clinical-Tech (Default) */
     --bg-primary: #080B0D;          /* Deepest clinical black */
     --surface: #101518;             /* Surface container */
@@ -37,26 +37,6 @@
     /* Animation Timings */
     --transition-fast: 0.18s ease;
     --transition-smooth: 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-[data-theme="light"] {
-    /* Color Palette — Light Clinical Theme */
-    --bg-primary: #F4F7F5;          /* Fresh clinical light background */
-    --surface: #FFFFFF;             /* Clean white surface container */
-    --surface-elevated: #E6EFEA;    /* Light slate card background */
-    
-    --text-primary: #0F1714;        /* Deep charcoal heading text */
-    --text-secondary: #4A5550;      /* Readable dark green-gray body */
-    --text-muted: #73807A;          /* Muted metadata */
-    
-    --accent-teal: #0D9488;         /* Deep clinical teal */
-    --accent-teal-hover: #0F766E;   /* Dark teal hover */
-    --accent-cyan: #0891B2;         /* Cyan accent */
-    --accent-glow: rgba(13, 148, 136, 0.2);
-
-    --border-subtle: rgba(15, 23, 20, 0.12);
-    --border-highlight: rgba(13, 148, 136, 0.35);
-    --card-shadow: 0 10px 30px rgba(15, 23, 20, 0.08);
 }
 
 /* Photo Card Component */

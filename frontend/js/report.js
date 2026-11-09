@@ -689,13 +689,6 @@ function renderReport(r) {
         </div>
 
         <div class="print-title">Educational Risk &amp; Pattern Summary</div>
-        <div class="clinical-photo-frame" style="height:210px;margin-bottom:24px">
-          <img src="assets/images/stethoscope-report.png" alt="Clinical Report Verification" loading="lazy">
-          <div class="clinical-photo-overlay" style="padding:20px">
-            <span class="clinical-photo-badge"><i class="fa-solid fa-file-medical"></i> VERIFIED ASSESSMENT REPORT</span>
-            <div class="clinical-photo-title" style="font-size:20px">Educational Risk & Pattern Summary</div>
-          </div>
-        </div>
 
         <div class="report-risk-banner">
           <div>
@@ -730,14 +723,14 @@ function renderReport(r) {
                   </linearGradient>
                 </defs>
                 <!-- Background track -->
-                <path d="M 25 100 A 75 75 0 0 1 175 100" fill="none" stroke="#1c292f" stroke-width="12" stroke-linecap="round"/>
+                <path class="mp-gauge-bg" d="M 25 100 A 75 75 0 0 1 175 100" fill="none" stroke="#1c292f" stroke-width="12" stroke-linecap="round"/>
                 <!-- Colored value track -->
                 <path d="M 25 100 A 75 75 0 0 1 175 100" fill="none" stroke="url(#scoreArcGrad)" stroke-width="12" stroke-linecap="round" stroke-dasharray="${arcDash.toFixed(1)} 300"/>
                 <!-- Needle indicator pin -->
-                <circle cx="${pinX}" cy="${pinY}" r="6.5" fill="#eef5f3" stroke="#080b0d" stroke-width="2.5"/>
+                <circle class="mp-gauge-pin" cx="${pinX}" cy="${pinY}" r="6.5" fill="#eef5f3" stroke="#080b0d" stroke-width="2.5"/>
                 <!-- Central Score value -->
-                <text x="100" y="86" text-anchor="middle" fill="#eef5f3" font-size="34" font-weight="800" font-family="var(--font-heading)">${score}</text>
-                <text x="100" y="104" text-anchor="middle" fill="#758784" font-size="12" font-weight="600">/ 100</text>
+                <text class="mp-gauge-val" x="100" y="86" text-anchor="middle" fill="#eef5f3" font-size="34" font-weight="800" font-family="var(--font-heading)">${score}</text>
+                <text class="mp-gauge-denom" x="100" y="104" text-anchor="middle" fill="#758784" font-size="12" font-weight="600">/ 100</text>
               </svg>
               <div class="mp-gauge-scale"><span>0 (Alert)</span><span>50</span><span>100 (Optimal)</span></div>
             </div>
@@ -754,10 +747,10 @@ function renderReport(r) {
             <h4><i class="fa-solid fa-chart-pie" style="color:var(--accent-teal)"></i> Risk distribution</h4>
             <div class="mp-donut-layout">
               <svg class="mp-donut" viewBox="0 0 120 120" aria-label="Health score ring">
-                <circle cx="60" cy="60" r="48" fill="none" stroke="#1e2c31" stroke-width="12"/>
+                <circle class="mp-donut-bg" cx="60" cy="60" r="48" fill="none" stroke="#1e2c31" stroke-width="12"/>
                 <circle cx="60" cy="60" r="48" fill="none" stroke="#38b6a4" stroke-width="12" stroke-linecap="round" stroke-dasharray="${dash.toFixed(1)} ${circumference.toFixed(1)}" transform="rotate(-90 60 60)"/>
-                <text x="60" y="57" text-anchor="middle" fill="#eef5f3" font-size="21" font-weight="800">${score}</text>
-                <text x="60" y="73" text-anchor="middle" fill="#82908f" font-size="12" font-weight="600">/100</text>
+                <text class="mp-donut-val" x="60" y="57" text-anchor="middle" fill="#eef5f3" font-size="21" font-weight="800">${score}</text>
+                <text class="mp-donut-denom" x="60" y="73" text-anchor="middle" fill="#82908f" font-size="12" font-weight="600">/100</text>
               </svg>
               <div class="mp-legend">
                 <div class="mp-legend-row"><span><i class="mp-dot"></i>Protective factors</span><strong>${good}%</strong></div>

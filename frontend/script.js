@@ -2,58 +2,21 @@
    MediPredict — Hybrid Top Bar + Closable Sidebar System Controller
    ========================================================================== */
 
-// Immediately apply saved theme before DOM render to prevent theme flash
+// Clear any saved theme and ensure default dark clinical theme
 (function applyInitialTheme() {
-    const savedTheme = localStorage.getItem('mediTheme') || 'dark';
-    document.documentElement.setAttribute('data-theme', savedTheme);
+    try {
+        localStorage.removeItem('mediTheme');
+    } catch (e) {}
+    document.documentElement.removeAttribute('data-theme');
 })();
 
 document.addEventListener('DOMContentLoaded', () => {
-    initThemeController();
     initScrollPortal();
     initSidebarDrawer();
     initScrollReveals();
     initWorkflowCardInteraction();
     initSessionState();
 });
-
-/**
- * Light Mode / Dark Mode Theme Switcher Controller
- */
-function initThemeController() {
-    const themeToggleBtns = document.querySelectorAll('.theme-toggle-btn');
-    
-    function setTheme(theme) {
-        document.documentElement.setAttribute('data-theme', theme);
-        localStorage.setItem('mediTheme', theme);
-        
-        // Update button icons across navbar and sidebar
-        themeToggleBtns.forEach(btn => {
-            const icon = btn.querySelector('i');
-            if (icon) {
-                if (theme === 'light') {
-                    icon.className = 'fa-solid fa-moon';
-                    btn.setAttribute('title', 'Switch to Dark Mode');
-                } else {
-                    icon.className = 'fa-solid fa-sun';
-                    btn.setAttribute('title', 'Switch to Light Mode');
-                }
-            }
-        });
-    }
-
-    // Initial setup from current attribute
-    const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
-    setTheme(currentTheme);
-
-    themeToggleBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const activeTheme = document.documentElement.getAttribute('data-theme') || 'dark';
-            const newTheme = activeTheme === 'dark' ? 'light' : 'dark';
-            setTheme(newTheme);
-        });
-    });
-}
 
 /**
  * Scroll-Driven Health Intelligence Portal Animation
