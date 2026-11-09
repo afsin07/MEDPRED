@@ -589,7 +589,6 @@ function renderReport(r) {
 
     const insights = buildDetailedInsights(answers, r);
     const tips = buildActionableTips(answers, r);
-    const checklist = buildActionChecklist(answers, r);
     const pillars = computePillars(answers, r, score);
 
     // Semi-circular speedometer arc gauge math
@@ -672,17 +671,6 @@ function renderReport(r) {
       </div>
     `).join("");
 
-    // 7-Day Checklist HTML
-    const checklistHtml = checklist.map(item => `
-      <div class="mp-check-item" data-id="${item.id}">
-        <div class="mp-check-box"><i class="fa-solid fa-check"></i></div>
-        <div class="mp-check-text">
-          <div class="mp-check-title">${escapeHtml(item.title)}</div>
-          <div class="mp-check-subtitle">${escapeHtml(item.sub)}</div>
-        </div>
-      </div>
-    `).join("");
-
     // Health Score Donut math
     const good = Math.max(0, Math.min(100, Math.round(score * 0.72)));
     const moderate = Math.max(0, Math.min(100, Math.round((100 - score) * 0.45)));
@@ -749,7 +737,7 @@ function renderReport(r) {
                 <circle cx="${pinX}" cy="${pinY}" r="6.5" fill="#eef5f3" stroke="#080b0d" stroke-width="2.5"/>
                 <!-- Central Score value -->
                 <text x="100" y="86" text-anchor="middle" fill="#eef5f3" font-size="34" font-weight="800" font-family="var(--font-heading)">${score}</text>
-                <text x="100" y="104" text-anchor="middle" fill="#758784" font-size="11" font-weight="600">/ 100</text>
+                <text x="100" y="104" text-anchor="middle" fill="#758784" font-size="12" font-weight="600">/ 100</text>
               </svg>
               <div class="mp-gauge-scale"><span>0 (Alert)</span><span>50</span><span>100 (Optimal)</span></div>
             </div>
@@ -769,7 +757,7 @@ function renderReport(r) {
                 <circle cx="60" cy="60" r="48" fill="none" stroke="#1e2c31" stroke-width="12"/>
                 <circle cx="60" cy="60" r="48" fill="none" stroke="#38b6a4" stroke-width="12" stroke-linecap="round" stroke-dasharray="${dash.toFixed(1)} ${circumference.toFixed(1)}" transform="rotate(-90 60 60)"/>
                 <text x="60" y="57" text-anchor="middle" fill="#eef5f3" font-size="21" font-weight="800">${score}</text>
-                <text x="60" y="72" text-anchor="middle" fill="#82908f" font-size="9">/100</text>
+                <text x="60" y="73" text-anchor="middle" fill="#82908f" font-size="12" font-weight="600">/100</text>
               </svg>
               <div class="mp-legend">
                 <div class="mp-legend-row"><span><i class="mp-dot"></i>Protective factors</span><strong>${good}%</strong></div>
@@ -800,10 +788,10 @@ function renderReport(r) {
               <i class="fa-solid fa-chart-simple" style="color:var(--accent-teal)"></i> Visual Biometric Pillar Health Scores
             </div>
             <div class="mp-pillar-graph-legend">
-              <span><i class="fa-solid fa-circle" style="color:#10b981;font-size:8px"></i> Optimal (&ge;80%)</span>
-              <span><i class="fa-solid fa-circle" style="color:#38b6a4;font-size:8px"></i> Good (60-79%)</span>
-              <span><i class="fa-solid fa-circle" style="color:#f59e0b;font-size:8px"></i> Moderate (45-59%)</span>
-              <span><i class="fa-solid fa-circle" style="color:#ef4444;font-size:8px"></i> Needs Focus (&lt;45%)</span>
+              <span><i class="fa-solid fa-circle" style="color:#10b981;font-size:12px"></i> Optimal (&ge;80%)</span>
+              <span><i class="fa-solid fa-circle" style="color:#38b6a4;font-size:12px"></i> Good (60-79%)</span>
+              <span><i class="fa-solid fa-circle" style="color:#f59e0b;font-size:12px"></i> Moderate (45-59%)</span>
+              <span><i class="fa-solid fa-circle" style="color:#ef4444;font-size:12px"></i> Needs Focus (&lt;45%)</span>
             </div>
           </div>
           <div class="mp-pillar-graph-grid">
@@ -892,24 +880,6 @@ function renderReport(r) {
           ${tipsHtml}
         </div>
 
-        <!-- 7-DAY PERSONALIZED ACTION PLAN -->
-        <div class="mp-action-plan-panel">
-          <div class="mp-plan-header">
-            <div class="mp-plan-title">
-              <i class="fa-solid fa-list-check" style="color:var(--accent-teal)"></i> Your 7-Day Personalized Action Plan
-            </div>
-            <div class="mp-plan-progress-wrapper">
-              <span id="planProgressLabel">0 of ${checklist.length} Completed (0%)</span>
-              <div class="mp-plan-progress-bar">
-                <div class="mp-plan-progress-fill" id="planProgressFill"></div>
-              </div>
-            </div>
-          </div>
-          <div class="mp-checklist-items">
-            ${checklistHtml}
-          </div>
-        </div>
-
         <!-- DISCLAIMER -->
         <div class="disclaimer-box">
           <i class="fa-solid fa-shield-halved"></i>
@@ -934,7 +904,6 @@ function renderReport(r) {
 
     // Initialize interactive behaviors
     initTipFilters();
-    initChecklist();
 }
 
 function initTipFilters() {
