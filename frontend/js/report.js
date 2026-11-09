@@ -637,13 +637,19 @@ function renderReport(r) {
         <!-- TOP GRID -->
         <div class="mp-report-grid top">
           <section class="mp-panel mp-score-card">
-            <h4>Score overview</h4>
+            <h4><i class="fa-solid fa-gauge" style="color:var(--accent-teal)"></i> Score overview</h4>
             <div class="mp-score">${score}<span>/100</span></div>
+            <div class="mp-score-badge-row">
+              <span class="mp-score-pill ${score >= 80 ? 'good' : score >= 50 ? 'moderate' : 'alert'}">
+                <i class="fa-solid ${score >= 80 ? 'fa-circle-check' : score >= 50 ? 'fa-triangle-exclamation' : 'fa-circle-exclamation'}"></i>
+                ${score >= 80 ? 'Optimal Range' : score >= 50 ? 'Moderate Baseline' : 'Needs Attention'}
+              </span>
+            </div>
             <div class="mp-score-caption">Computed educational health score based on multivariable Random Forest classifier and lifestyle weights.</div>
           </section>
 
           <section class="mp-panel">
-            <h4>Risk distribution</h4>
+            <h4><i class="fa-solid fa-chart-pie" style="color:var(--accent-teal)"></i> Risk distribution</h4>
             <div class="mp-donut-layout">
               <svg class="mp-donut" viewBox="0 0 120 120" aria-label="Health score ring">
                 <circle cx="60" cy="60" r="48" fill="none" stroke="#1e2c31" stroke-width="12"/>
@@ -657,10 +663,18 @@ function renderReport(r) {
                 <div class="mp-legend-row"><span><i class="mp-dot red"></i>Attention areas</span><strong>${high}%</strong></div>
               </div>
             </div>
+            <div class="mp-risk-breakdown-bar">
+              <div class="mp-risk-segment good" style="width:${good}%" title="Protective: ${good}%"></div>
+              <div class="mp-risk-segment moderate" style="width:${moderate}%" title="Moderate: ${moderate}%"></div>
+              <div class="mp-risk-segment high" style="width:${high}%" title="Attention: ${high}%"></div>
+            </div>
+            <div class="mp-risk-breakdown-text">
+              <span><i class="fa-solid fa-shield-halved" style="color:var(--accent-teal);margin-right:6px"></i>${good}% of your assessed metrics are in protective zones.</span>
+            </div>
           </section>
 
           <section class="mp-panel">
-            <h4>Key Clinical &amp; Lifestyle Insights</h4>
+            <h4><i class="fa-solid fa-lightbulb" style="color:var(--accent-teal)"></i> Key Clinical &amp; Lifestyle Insights</h4>
             <div class="mp-insights">${insightHtml}</div>
           </section>
         </div>
@@ -668,12 +682,12 @@ function renderReport(r) {
         <!-- BOTTOM GRID -->
         <div class="mp-report-grid bottom">
           <section class="mp-panel">
-            <h4>Assessment pattern analysis</h4>
+            <h4><i class="fa-solid fa-chart-column" style="color:var(--accent-teal)"></i> Assessment pattern analysis</h4>
             ${conditionBars}
           </section>
 
           <section class="mp-panel">
-            <h4>Vitals overview</h4>
+            <h4><i class="fa-solid fa-heart-pulse" style="color:var(--accent-teal)"></i> Vitals overview</h4>
             <div class="mp-vitals">
               <div class="mp-vital">
                 <div class="mp-vital-label">Blood pressure</div>
@@ -699,7 +713,7 @@ function renderReport(r) {
           </section>
 
           <section class="mp-panel">
-            <h4>Personalized Clinical Guidance</h4>
+            <h4><i class="fa-solid fa-clipboard-check" style="color:var(--accent-teal)"></i> Personalized Clinical Guidance</h4>
             <div class="mp-recommendations">${recs}</div>
           </section>
         </div>
