@@ -146,15 +146,20 @@ input[type="range"]::-moz-range-thumb{width:17px;height:17px;background:#48c5b2;
 .mp-report-grid.bottom{grid-template-columns:1fr 1.2fr 1.35fr;align-items:stretch;}
 .mp-panel{background:linear-gradient(145deg,#0d151a,#0b1216);border:1px solid #202d33;border-radius:16px;padding:22px;min-width:0;display:flex;flex-direction:column;justify-content:flex-start;}
 .mp-panel h4{margin:0 0 16px;color:#c6d1d0;font-size:12px;text-transform:uppercase;letter-spacing:.1em;display:flex;align-items:center;gap:8px;}
-.mp-score-card{display:flex;flex-direction:column;justify-content:flex-start;min-height:0;}
+.mp-score-card{display:flex;flex-direction:column;justify-content:flex-start;align-items:center;text-align:center;min-height:0;}
 .mp-score{font-size:64px;line-height:1;font-weight:800;color:var(--mp-teal);letter-spacing:-.04em;}
 .mp-score span{font-size:20px;color:#71807f;font-weight:600;}
-.mp-score-badge-row{margin:10px 0 12px;}
+.mp-score-badge-row{margin:6px 0 10px;}
 .mp-score-pill{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:4px 10px;border-radius:999px;}
 .mp-score-pill.good{background:rgba(16,185,129,0.15);color:#10b981;border:1px solid rgba(16,185,129,0.3);}
 .mp-score-pill.moderate{background:rgba(245,158,11,0.15);color:#f59e0b;border:1px solid rgba(245,158,11,0.3);}
 .mp-score-pill.alert{background:rgba(239,68,68,0.15);color:#ef4444;border:1px solid rgba(239,68,68,0.3);}
-.mp-score-caption{margin-top:4px;color:#a5b2b0;font-size:13px;line-height:1.55;}
+.mp-score-caption{margin-top:4px;color:#a5b2b0;font-size:12px;line-height:1.55;max-width:240px;}
+
+/* Visual Health Score Arc Gauge */
+.mp-gauge-wrap{position:relative;width:100%;max-width:210px;margin:2px auto 6px;display:flex;flex-direction:column;align-items:center;}
+.mp-gauge-svg{width:100%;height:auto;display:block;}
+.mp-gauge-scale{display:flex;justify-content:space-between;width:100%;font-size:10px;font-weight:600;color:#677b77;margin-top:-6px;padding:0 6px;}
 
 .mp-donut-layout{display:grid;grid-template-columns:140px 1fr;align-items:center;gap:20px;}
 .mp-donut{width:140px;height:140px;display:block;}
@@ -723,4 +728,187 @@ input[type="range"]::-moz-range-thumb{width:17px;height:17px;background:#48c5b2;
 .mp-insight i.amber { color: #f59e0b; }
 .mp-insight i.red { color: #ef4444; }
 .mp-insight i.blue { color: #60a5fa; }
+
+/* ================================================================
+   VISUAL BIOMETRIC PILLAR SCORE GRAPH
+   ================================================================ */
+.mp-pillar-graph-card {
+  margin: 24px 0 26px;
+  background: linear-gradient(145deg, #0d151a, #0b1216);
+  border: 1px solid #202d33;
+  border-radius: 16px;
+  padding: 24px;
+}
+.mp-pillar-graph-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #1c2a31;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.mp-pillar-graph-title {
+  font-family: var(--font-heading);
+  font-size: 16px;
+  font-weight: 700;
+  color: #eaf1ef;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.mp-pillar-graph-legend {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 12px;
+  color: #8fa09d;
+  flex-wrap: wrap;
+}
+.mp-pillar-graph-legend span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.mp-pillar-graph-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px 22px;
+}
+.mp-pillar-row {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: #111a1f;
+  border: 1px solid #1a272d;
+  border-radius: 12px;
+  padding: 14px 16px;
+}
+.mp-pillar-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  font-weight: 600;
+  color: #d1dedb;
+}
+.mp-pillar-head span i {
+  margin-right: 8px;
+  font-size: 14px;
+}
+.mp-pillar-score-val {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 14px;
+}
+.mp-pillar-track {
+  height: 8px;
+  background: #17242a;
+  border-radius: 999px;
+  position: relative;
+  overflow: hidden;
+}
+.mp-pillar-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.mp-pillar-fill.emerald { background: linear-gradient(90deg, #10b981, #38b6a4); }
+.mp-pillar-fill.teal { background: linear-gradient(90deg, #258f84, #4cd6e1); }
+.mp-pillar-fill.amber { background: linear-gradient(90deg, #d97706, #f59e0b); }
+.mp-pillar-fill.red { background: linear-gradient(90deg, #dc2626, #ef4444); }
+.mp-pillar-sub {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: #748582;
+}
+
+/* ================================================================
+   CENTERED CLINICAL LOADING CARD (FIXES BUGGY TEXT DISPLACEMENT)
+   ================================================================ */
+.mp-loading-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 520px;
+  width: 100%;
+  padding: 40px 20px;
+  margin: 0 auto;
+}
+.mp-loading-card {
+  background: linear-gradient(145deg, #0e171c, #0a1114);
+  border: 1px solid #1f2e35;
+  border-radius: 20px;
+  padding: 48px 36px;
+  text-align: center;
+  max-width: 480px;
+  width: 100%;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.mp-loading-spinner-ring {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  border: 3px solid #16242a;
+  border-top-color: var(--accent-teal);
+  border-right-color: var(--accent-teal);
+  animation: mpSpin 1s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+.mp-loading-spinner-ring i {
+  font-size: 26px;
+  color: var(--accent-teal);
+  animation: mpPulse 1.5s ease-in-out infinite;
+}
+.mp-loading-card h3 {
+  font-family: var(--font-heading);
+  font-size: 19px;
+  font-weight: 700;
+  color: #eaf1ef;
+  margin: 0 0 10px;
+  text-align: center;
+}
+.mp-loading-card p {
+  font-size: 13px;
+  color: #92a29f;
+  line-height: 1.6;
+  margin: 0 0 24px;
+  max-width: 380px;
+  text-align: center;
+}
+.mp-loading-progress-track {
+  width: 100%;
+  height: 5px;
+  background: #152227;
+  border-radius: 999px;
+  overflow: hidden;
+  position: relative;
+}
+.mp-loading-progress-bar {
+  height: 100%;
+  width: 40%;
+  background: linear-gradient(90deg, transparent, var(--accent-teal), transparent);
+  border-radius: 999px;
+  position: absolute;
+  animation: mpShimmer 1.4s ease-in-out infinite;
+}
+@keyframes mpSpin {
+  to { transform: rotate(360deg); }
+}
+@keyframes mpPulse {
+  0%, 100% { transform: scale(0.9); opacity: 0.8; }
+  50% { transform: scale(1.1); opacity: 1; }
+}
+@keyframes mpShimmer {
+  0% { left: -40%; }
+  100% { left: 100%; }
+}
 

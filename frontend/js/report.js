@@ -505,6 +505,74 @@ function buildActionChecklist(a, r) {
 }
 
 /* ==========================================================================
+   BIOMETRIC HEALTH PILLAR SCORE GRAPH CALCULATOR
+   ========================================================================== */
+function computePillars(a, r, score) {
+    const sleep = Number(a.sleepHours) || 7;
+    const stress = Number(a.stressLevel) || 5;
+    const bp = a.bloodPressure || "normal";
+    const sugar = a.bloodSugar || "normal";
+    const activity = a.activity || "moderate";
+    const diet = a.diet || "balanced";
+    const smoking = a.smoking || "no";
+    const symptoms = Array.isArray(a.symptoms) ? a.symptoms : [];
+    const existing = Array.isArray(a.existingConditions) ? a.existingConditions : [];
+
+    // 1. Cardiovascular
+    let card = 95;
+    if (bp === "high") card -= 25;
+    if (smoking === "yes") card -= 20;
+    else if (smoking === "occasionally") card -= 10;
+    if (symptoms.includes("chestPain") || symptoms.includes("shortnessOfBreath")) card -= 25;
+    if (existing.includes("hypertension") || existing.includes("heartDisease")) card -= 20;
+    card = Math.max(15, Math.min(100, card));
+
+    // 2. Metabolic
+    let meta = 95;
+    if (sugar === "high") meta -= 25;
+    if (diet === "highSugarFat") meta -= 15;
+    else if (diet === "irregular") meta -= 10;
+    if (symptoms.includes("frequentUrination") || symptoms.includes("excessiveThirst")) meta -= 20;
+    if (existing.includes("diabetes")) meta -= 25;
+    meta = Math.max(15, Math.min(100, meta));
+
+    // 3. Sleep & Recovery
+    let slp = 95;
+    if (sleep < 5) slp = 40;
+    else if (sleep < 6) slp = 60;
+    else if (sleep > 9) slp = 70;
+    if (symptoms.includes("fatigue")) slp -= 15;
+    slp = Math.max(20, Math.min(100, slp));
+
+    // 4. Stress Resilience
+    let str = Math.round(100 - (stress * 8.5));
+    if (symptoms.includes("headache") || symptoms.includes("dizziness")) str -= 10;
+    str = Math.max(15, Math.min(100, str));
+
+    // 5. Physical Vitality
+    let vit = 85;
+    if (activity === "active") vit = 98;
+    else if (activity === "moderate") vit = 88;
+    else if (activity === "light") vit = 68;
+    else if (activity === "sedentary") vit = 45;
+
+    function colorClass(val) {
+        return val >= 80 ? "emerald" : val >= 60 ? "teal" : val >= 45 ? "amber" : "red";
+    }
+    function statusLabel(val) {
+        return val >= 80 ? "Optimal" : val >= 60 ? "Good" : val >= 45 ? "Moderate" : "Needs Focus";
+    }
+
+    return [
+        { name: "Cardiovascular Health", icon: "fa-heart-pulse", val: card, color: colorClass(card), status: statusLabel(card) },
+        { name: "Metabolic & Blood Sugar", icon: "fa-droplet", val: meta, color: colorClass(meta), status: statusLabel(meta) },
+        { name: "Sleep & Circadian Restoration", icon: "fa-moon", val: slp, color: colorClass(slp), status: statusLabel(slp) },
+        { name: "Autonomic Stress Resilience", icon: "fa-brain", val: str, color: colorClass(str), status: statusLabel(str) },
+        { name: "Physical Vitality & Movement", icon: "fa-person-running", val: vit, color: colorClass(vit), status: statusLabel(vit) },
+    ];
+}
+
+/* ==========================================================================
    MAIN REPORT RENDER FUNCTION
    ========================================================================== */
 function renderReport(r) {
@@ -522,6 +590,31 @@ function renderReport(r) {
     const insights = buildDetailedInsights(answers, r);
     const tips = buildActionableTips(answers, r);
     const checklist = buildActionChecklist(answers, r);
+    const pillars = computePillars(answers, r, score);
+
+    // Semi-circular speedometer arc gauge math
+    const arcLength = 235.62; // pi * 75
+    const arcDash = (score / 100) * arcLength;
+    const arcRad = Math.PI * (score / 100);
+    const pinX = (100 - 75 * Math.cos(arcRad)).toFixed(1);
+    const pinY = (100 - 75 * Math.sin(arcRad)).toFixed(1);
+
+    // Biometric pillar graph HTML
+    const pillarHtml = pillars.map(p => `
+      <div class="mp-pillar-row">
+        <div class="mp-pillar-head">
+          <span><i class="fa-solid ${p.icon}" style="color:var(--accent-teal)"></i> ${escapeHtml(p.name)}</span>
+          <span class="mp-pillar-score-val">${p.val}%</span>
+        </div>
+        <div class="mp-pillar-track">
+          <div class="mp-pillar-fill ${p.color}" style="width:${p.val}%"></div>
+        </div>
+        <div class="mp-pillar-sub">
+          <span>Target: 80%+</span>
+          <span style="font-weight:600;color:${p.val >= 80 ? '#10b981' : p.val >= 60 ? '#38b6a4' : p.val >= 45 ? '#f59e0b' : '#ef4444'}">${p.status}</span>
+        </div>
+      </div>
+    `).join("");
 
     // Filter counts for tabs
     const counts = {
@@ -637,15 +730,36 @@ function renderReport(r) {
         <!-- TOP GRID -->
         <div class="mp-report-grid top">
           <section class="mp-panel mp-score-card">
-            <h4><i class="fa-solid fa-gauge" style="color:var(--accent-teal)"></i> Score overview</h4>
-            <div class="mp-score">${score}<span>/100</span></div>
+            <h4 style="width:100%"><i class="fa-solid fa-gauge-high" style="color:var(--accent-teal)"></i> Health Score Gauge</h4>
+            <div class="mp-gauge-wrap">
+              <svg class="mp-gauge-svg" viewBox="0 0 200 120" aria-label="Visual Health Score Gauge">
+                <defs>
+                  <linearGradient id="scoreArcGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#ef4444"/>
+                    <stop offset="35%" stop-color="#f59e0b"/>
+                    <stop offset="70%" stop-color="#10b981"/>
+                    <stop offset="100%" stop-color="#38b6a4"/>
+                  </linearGradient>
+                </defs>
+                <!-- Background track -->
+                <path d="M 25 100 A 75 75 0 0 1 175 100" fill="none" stroke="#1c292f" stroke-width="12" stroke-linecap="round"/>
+                <!-- Colored value track -->
+                <path d="M 25 100 A 75 75 0 0 1 175 100" fill="none" stroke="url(#scoreArcGrad)" stroke-width="12" stroke-linecap="round" stroke-dasharray="${arcDash.toFixed(1)} 300"/>
+                <!-- Needle indicator pin -->
+                <circle cx="${pinX}" cy="${pinY}" r="6.5" fill="#eef5f3" stroke="#080b0d" stroke-width="2.5"/>
+                <!-- Central Score value -->
+                <text x="100" y="86" text-anchor="middle" fill="#eef5f3" font-size="34" font-weight="800" font-family="var(--font-heading)">${score}</text>
+                <text x="100" y="104" text-anchor="middle" fill="#758784" font-size="11" font-weight="600">/ 100</text>
+              </svg>
+              <div class="mp-gauge-scale"><span>0 (Alert)</span><span>50</span><span>100 (Optimal)</span></div>
+            </div>
             <div class="mp-score-badge-row">
               <span class="mp-score-pill ${score >= 80 ? 'good' : score >= 50 ? 'moderate' : 'alert'}">
                 <i class="fa-solid ${score >= 80 ? 'fa-circle-check' : score >= 50 ? 'fa-triangle-exclamation' : 'fa-circle-exclamation'}"></i>
                 ${score >= 80 ? 'Optimal Range' : score >= 50 ? 'Moderate Baseline' : 'Needs Attention'}
               </span>
             </div>
-            <div class="mp-score-caption">Computed educational health score based on multivariable Random Forest classifier and lifestyle weights.</div>
+            <div class="mp-score-caption">Composite wellness index computed from your physiological markers and lifestyle parameters.</div>
           </section>
 
           <section class="mp-panel">
@@ -678,6 +792,24 @@ function renderReport(r) {
             <div class="mp-insights">${insightHtml}</div>
           </section>
         </div>
+
+        <!-- VISUAL BIOMETRIC PILLAR SCORE GRAPH -->
+        <section class="mp-pillar-graph-card">
+          <div class="mp-pillar-graph-header">
+            <div class="mp-pillar-graph-title">
+              <i class="fa-solid fa-chart-simple" style="color:var(--accent-teal)"></i> Visual Biometric Pillar Health Scores
+            </div>
+            <div class="mp-pillar-graph-legend">
+              <span><i class="fa-solid fa-circle" style="color:#10b981;font-size:8px"></i> Optimal (&ge;80%)</span>
+              <span><i class="fa-solid fa-circle" style="color:#38b6a4;font-size:8px"></i> Good (60-79%)</span>
+              <span><i class="fa-solid fa-circle" style="color:#f59e0b;font-size:8px"></i> Moderate (45-59%)</span>
+              <span><i class="fa-solid fa-circle" style="color:#ef4444;font-size:8px"></i> Needs Focus (&lt;45%)</span>
+            </div>
+          </div>
+          <div class="mp-pillar-graph-grid">
+            ${pillarHtml}
+          </div>
+        </section>
 
         <!-- BOTTOM GRID -->
         <div class="mp-report-grid bottom">

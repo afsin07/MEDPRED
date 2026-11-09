@@ -114,12 +114,20 @@
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
     <!-- App Container -->
-    <div class="app-container assessment-app-container">
+    <div class="app-container report-app-container">
         <div id="reportContainer">
-            <!-- Report content rendered dynamically by report.js -->
-            <div style="text-align: center; padding: 60px;">
-                <i class="fa-solid fa-spinner fa-spin" style="font-size: 32px; color: var(--accent-teal);"></i>
-                <p style="margin-top: 16px; color: var(--text-secondary);">Loading assessment report...</p>
+            <!-- Loading state rendered cleanly while fetching report -->
+            <div class="mp-loading-wrap">
+                <div class="mp-loading-card">
+                    <div class="mp-loading-spinner-ring">
+                        <i class="fa-solid fa-heart-pulse"></i>
+                    </div>
+                    <h3>Loading Assessment Report...</h3>
+                    <p>Retrieving personalized insights, computing visual score graphs, and analyzing health biomarkers.</p>
+                    <div class="mp-loading-progress-track">
+                        <div class="mp-loading-progress-bar"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
