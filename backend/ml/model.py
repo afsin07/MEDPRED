@@ -73,86 +73,86 @@ def _generate_recommendations_and_tips(a, risk, score, indicators):
 
     # 1. Primary Clinical Direction
     if risk == 'High':
-        recs.append("Priority Medical Review: Your composite health profile indicates an elevated risk pattern. We recommend scheduling an in-person evaluation with a licensed physician to review vitals and symptoms.")
+        recs.append("Doctor Visit Recommended: Your health answers show several risk factors. We recommend visiting a doctor soon to check your vitals and discuss how you are feeling.")
     elif risk == 'Medium':
-        recs.append("Targeted Preventive Action: Moderate risk factors detected. Proactive lifestyle modifications over the next 30–60 days can significantly lower future health risks.")
+        recs.append("Healthy Lifestyle Changes: Some moderate risk factors were found. Making a few positive changes to your diet, sleep, and daily movement over the next month or two will help protect your health.")
     else:
-        recs.append("Maintenance & Prevention: Your overall profile indicates low immediate risk. Continue reinforcing healthy daily routines and stay up to date with routine annual screenings.")
+        recs.append("Keep Up the Good Work: Your health profile looks good with low immediate risk. Keep up your healthy daily habits and remember to get routine annual check-ups.")
 
     # 2. Blood Pressure Guidance
     bp = a.get("bloodPressure", "normal")
     if bp == "high":
-        recs.append("Cardiovascular & BP: Reported blood pressure is elevated. Reduce sodium intake (< 1,500–2,000 mg/day), incorporate potassium-rich foods (bananas, spinach, avocados), and track morning/evening BP readings.")
+        recs.append("Blood Pressure: Your reported blood pressure is high. Cut back on salty and packaged snacks, eat potassium-rich foods (like bananas and spinach), and check your blood pressure regularly.")
     elif bp == "low":
-        recs.append("Blood Pressure: Reported blood pressure is low. Stay well hydrated, ensure adequate dietary electrolyte balance, and rise slowly from sitting or lying positions.")
+        recs.append("Blood Pressure: Your reported blood pressure is low. Drink plenty of water throughout the day and stand up slowly from sitting or lying down to avoid dizziness.")
     else:
-        recs.append("Cardiovascular: Optimal blood pressure reported. Sustain cardiovascular endurance with at least 150 minutes of moderate aerobic activity weekly.")
+        recs.append("Blood Pressure: Your blood pressure is in a healthy range. Keep it strong by getting at least 30 minutes of brisk walking or exercise most days.")
 
     # 3. Blood Sugar & Metabolic Health
     sugar = a.get("bloodSugar", "normal")
     if sugar == "high":
-        recs.append("Metabolic Health: Elevated blood sugar reported. Limit refined carbohydrates and high-fructose beverages; pair complex carbohydrates with dietary fiber and lean protein, and take a 10-minute walk after meals to blunt glucose spikes.")
+        recs.append("Blood Sugar: Your reported blood sugar is high. Cut down on sweet drinks, sugary treats, and white bread. Taking a quick 10-minute walk right after meals helps lower sugar naturally.")
     elif sugar == "low":
-        recs.append("Metabolic Health: Blood sugar reported low. Consume balanced meals at regular intervals with complex carbohydrates and healthy fats to maintain steady plasma glucose.")
+        recs.append("Blood Sugar: Your reported blood sugar is low. Eat balanced meals at regular times with whole grains and healthy snacks to keep your energy steady.")
     else:
-        recs.append("Metabolic Health: Normal blood sugar status. Maintain insulin sensitivity through regular physical exercise and minimal ultra-processed food consumption.")
+        recs.append("Blood Sugar: Your blood sugar is normal. Keep it steady by eating wholesome meals and avoiding sugary drinks.")
 
     # 4. Sleep & Recovery
     sleep = float(a.get("sleepHours", 7))
     if sleep < 6:
-        recs.append("Sleep & Recovery: You reported sleeping under 6 hours. Insufficient sleep elevates systemic inflammation and nocturnal blood pressure. Aim for 7–8 hours in a dark, quiet bedroom (18–20°C) with no screens 45 minutes before sleep.")
+        recs.append("Sleep: You reported getting less than 6 hours of sleep. Try to get 7 to 8 hours in a quiet, dark bedroom, and put your phone away 45 minutes before bed.")
     elif sleep > 9:
-        recs.append("Sleep & Recovery: Prolonged sleep (> 9 hours) paired with daytime tiredness may indicate non-restorative sleep. Consider evaluation for sleep architecture quality or sleep apnea.")
+        recs.append("Sleep: You sleep more than 9 hours. If you still wake up feeling tired during the day, make sure your bedroom is quiet, dark, and comfortable.")
     else:
-        recs.append("Sleep Hygiene: Sleep duration is in the recommended range (7–9 hours). Strengthen your circadian rhythm with 10–15 minutes of outdoor sunlight within an hour of waking.")
+        recs.append("Sleep: Your sleep time (7–9 hours) is in the ideal range. Getting outside for morning sunlight will help you maintain this good sleep rhythm.")
 
-    # 5. Stress & Autonomic Balance
+    # 5. Stress & Relaxation
     stress = float(a.get("stressLevel", 5))
     if stress >= 7:
-        recs.append("Stress Management: High stress index reported. Practice daily parasympathetic activation: 4-7-8 diaphragmatic breathing or physiological sighs (2 quick inhales, 1 extended exhale) for 5 minutes twice daily.")
+        recs.append("Stress: You reported high stress. Take a few minutes each day for slow, deep breathing (breathe in for 4 seconds, hold for 7, breathe out for 8) to help calm your body down.")
     elif stress >= 5:
-        recs.append("Stress Management: Moderate stress levels. Schedule deliberate 5-minute micro-breaks during work and engage in regular outdoor relaxation to buffer cortisol accumulation.")
+        recs.append("Stress: Take short 5-minute breathers during your workday to stretch, walk around, and prevent stress from building up.")
     else:
-        recs.append("Stress Management: Stress is well-managed. Continue healthy mindfulness and social connection habits.")
+        recs.append("Stress: Your stress is well-managed. Continue taking time for yourself and doing activities you enjoy.")
 
     # 6. Physical Activity & Movement
     activity = a.get("activity", "moderate")
     if activity == "sedentary":
-        recs.append("Physical Fitness: Sedentary lifestyle identified. Start with accessible movement: break prolonged sitting every 45 minutes, and build a routine of 20–30 minutes of daily brisk walking.")
+        recs.append("Daily Movement: Try not to sit for hours at a time. Stand up every 45 minutes and aim for a 20 to 30-minute brisk walk every day.")
     elif activity == "light":
-        recs.append("Physical Fitness: Progress your baseline by adding 30 minutes of moderate aerobic training (cycling, jogging, swimming) 4–5 days per week plus 2 days of bodyweight resistance.")
+        recs.append("Daily Movement: Build on your daily routine by adding 30 minutes of walking, cycling, or swimming most days, plus simple bodyweight exercises.")
     else:
-        recs.append("Physical Fitness: Great activity foundation. Maintain consistent moderate-to-vigorous exercise and include strength/resistance training to safeguard joint mobility and metabolic mass.")
+        recs.append("Daily Movement: You have a great exercise foundation. Keep up regular movement and include simple strength exercises (like squats or push-ups) twice a week.")
 
-    # 7. Dietary Quality & Nutrition
+    # 7. Food & Nutrition
     diet = a.get("diet", "balanced")
     if diet == "highSugarFat":
-        recs.append("Nutritional Quality: High intake of processed sugars and saturated fats reported. Swap fried and ultra-processed snacks for antioxidant-rich fruits, raw nuts, seeds, and extra virgin olive oil.")
+        recs.append("Food Habits: You reported eating a lot of sweet or fatty foods. Try swapping fried snacks and sugary treats for fresh fruits, nuts, and home-cooked meals.")
     elif diet == "irregular":
-        recs.append("Nutritional Consistency: Irregular meal patterns disrupt metabolic rhythms and insulin response. Set consistent daily meal windows to stabilize energy and digestive health.")
+        recs.append("Food Habits: Try to eat your meals around the same time every day. This keeps your energy steady and helps digestion.")
     else:
-        recs.append("Nutritional Quality: Balanced dietary pattern reported. Keep diversifying plant foods (aim for 25+ different plant varieties weekly) to enrich the gut microbiome.")
+        recs.append("Food Habits: Great job eating a balanced diet! Keep enjoying a colorful mix of vegetables, fruits, and whole foods.")
 
     # 8. Modifiable Substance Factors
     smoking = a.get("smoking", "no")
     if smoking in ("yes", "occasionally"):
-        recs.append("Cardiovascular Risk: Smoking dramatically accelerates arterial stiffness and endothelial damage. Quitting smoking cuts excess coronary heart disease risk by half within 1 year.")
+        recs.append("Smoking: Quitting or cutting back on smoking quickly protects your heart and helps you breathe much easier.")
 
     alcohol = a.get("alcohol", "no")
     if alcohol == "frequent":
-        recs.append("Metabolic Recovery: Frequent alcohol consumption disrupts restorative REM sleep, elevates triglycerides, and increases liver workload. Aim for at least 3–4 alcohol-free days weekly.")
+        recs.append("Alcohol: If you drink frequently, try to have at least 3 or 4 alcohol-free days each week to give your body and liver a rest.")
 
     # 9. Symptom Alerts
     symptoms = set(a.get("symptoms") or [])
     if symptoms & {"chestPain", "shortnessOfBreath"}:
-        recs.append("⚠️ Critical Symptom Alert: Reported chest discomfort or shortness of breath should be assessed promptly by a healthcare professional, especially if exertion-triggered.")
+        recs.append("⚠️ Important Alert: Chest pain or trouble breathing can be serious. Please see a doctor or visit an urgent care center promptly.")
     elif symptoms & {"frequentUrination", "excessiveThirst", "blurredVision"}:
-        recs.append("Symptom Correlation: Frequent urination and increased thirst are recognized indicators for glucose intolerance; consider requesting an HbA1c test from your doctor.")
+        recs.append("Notice: Frequent urination or constant thirst can be signs of high blood sugar. Consider asking your doctor for a routine blood test.")
     elif symptoms & {"fatigue", "dizziness", "headache"}:
-        recs.append("Symptom Notice: Persistent fatigue and headaches often correlate with chronic dehydration, electrolyte shifts, or sleep debt. Increase daily water intake (2–2.5L) and monitor duration.")
+        recs.append("Notice: Frequent tiredness or headaches often come from not drinking enough water or missing sleep. Drink 8–10 glasses of water daily and rest well.")
 
     # 10. Educational Disclaimer
-    recs.append("Educational Note: This assessment is designed for educational health awareness and does not replace medical diagnosis, consultation, or treatment by a licensed physician.")
+    recs.append("Educational Note: This assessment is for health awareness and does not replace medical advice or diagnosis from a doctor.")
 
     return recs
 

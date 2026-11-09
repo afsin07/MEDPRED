@@ -93,77 +93,77 @@ function mpGeneratePrediction(answers) {
     const recommendations = [];
 
     if (riskLevel === "High") {
-        recommendations.push("Priority Medical Review: Your composite health profile indicates an elevated risk pattern. We recommend scheduling an in-person evaluation with a licensed physician to review vitals and symptoms.");
+        recommendations.push("Doctor Visit Recommended: Your health answers show several risk factors. We recommend visiting a doctor soon to check your vitals and discuss how you are feeling.");
     } else if (riskLevel === "Medium") {
-        recommendations.push("Targeted Preventive Action: Moderate risk factors detected. Proactive lifestyle modifications over the next 30–60 days can significantly lower future health risks.");
+        recommendations.push("Healthy Lifestyle Changes: Some moderate risk factors were found. Making a few positive changes to your diet, sleep, and daily movement over the next month or two will help protect your health.");
     } else {
-        recommendations.push("Maintenance & Prevention: Your overall profile indicates low immediate risk. Continue reinforcing healthy daily routines and stay up to date with routine annual screenings.");
+        recommendations.push("Keep Up the Good Work: Your health profile looks good with low immediate risk. Keep up your healthy daily habits and remember to get routine annual check-ups.");
     }
 
     if (a.bloodPressure === "high") {
-        recommendations.push("Cardiovascular & BP: Reported blood pressure is elevated. Reduce sodium intake (< 1,500–2,000 mg/day), incorporate potassium-rich foods (bananas, spinach, avocados), and track morning/evening BP readings.");
+        recommendations.push("Blood Pressure: Your reported blood pressure is high. Cut back on salty and packaged snacks, eat potassium-rich foods (like bananas and spinach), and check your blood pressure regularly.");
     } else if (a.bloodPressure === "low") {
-        recommendations.push("Blood Pressure: Reported blood pressure is low. Stay well hydrated, ensure adequate dietary electrolyte balance, and rise slowly from sitting or lying positions.");
+        recommendations.push("Blood Pressure: Your reported blood pressure is low. Drink plenty of water throughout the day and stand up slowly from sitting or lying down to avoid dizziness.");
     } else {
-        recommendations.push("Cardiovascular: Optimal blood pressure reported. Sustain cardiovascular endurance with at least 150 minutes of moderate aerobic activity weekly.");
+        recommendations.push("Blood Pressure: Your blood pressure is in a healthy range. Keep it strong by getting at least 30 minutes of brisk walking or exercise most days.");
     }
 
     if (a.bloodSugar === "high") {
-        recommendations.push("Metabolic Health: Elevated blood sugar reported. Limit refined carbohydrates and high-fructose beverages; pair complex carbohydrates with dietary fiber and lean protein, and take a 10-minute walk after meals to blunt glucose spikes.");
+        recommendations.push("Blood Sugar: Your reported blood sugar is high. Cut down on sweet drinks, sugary treats, and white bread. Taking a quick 10-minute walk right after meals helps lower sugar naturally.");
     } else if (a.bloodSugar === "low") {
-        recommendations.push("Metabolic Health: Blood sugar reported low. Consume balanced meals at regular intervals with complex carbohydrates and healthy fats to maintain steady plasma glucose.");
+        recommendations.push("Blood Sugar: Your reported blood sugar is low. Eat balanced meals at regular times with whole grains and healthy snacks to keep your energy steady.");
     } else {
-        recommendations.push("Metabolic Health: Normal blood sugar status. Maintain insulin sensitivity through regular physical exercise and minimal ultra-processed food consumption.");
+        recommendations.push("Blood Sugar: Your blood sugar is normal. Keep it steady by eating wholesome meals and avoiding sugary drinks.");
     }
 
     if (sleep < 6) {
-        recommendations.push("Sleep & Recovery: You reported sleeping under 6 hours. Insufficient sleep elevates systemic inflammation and nocturnal blood pressure. Aim for 7–8 hours in a dark, quiet bedroom (18–20°C) with no screens 45 minutes before sleep.");
+        recommendations.push("Sleep: You reported getting less than 6 hours of sleep. Try to get 7 to 8 hours in a quiet, dark bedroom, and put your phone away 45 minutes before bed.");
     } else if (sleep > 9) {
-        recommendations.push("Sleep & Recovery: Prolonged sleep (> 9 hours) paired with daytime tiredness may indicate non-restorative sleep. Consider evaluation for sleep architecture quality or sleep apnea.");
+        recommendations.push("Sleep: You sleep more than 9 hours. If you still wake up feeling tired during the day, make sure your bedroom is quiet, dark, and comfortable.");
     } else {
-        recommendations.push("Sleep Hygiene: Sleep duration is in the recommended range (7–9 hours). Strengthen your circadian rhythm with 10–15 minutes of outdoor sunlight within an hour of waking.");
+        recommendations.push("Sleep: Your sleep time (7–9 hours) is in the ideal range. Getting outside for morning sunlight will help you maintain this good sleep rhythm.");
     }
 
     if (stress >= 7) {
-        recommendations.push("Stress Management: High stress index reported. Practice daily parasympathetic activation: 4-7-8 diaphragmatic breathing or physiological sighs (2 quick inhales, 1 extended exhale) for 5 minutes twice daily.");
+        recommendations.push("Stress: You reported high stress. Take a few minutes each day for slow, deep breathing (breathe in for 4 seconds, hold for 7, breathe out for 8) to help calm your body down.");
     } else if (stress >= 5) {
-        recommendations.push("Stress Management: Moderate stress levels. Schedule deliberate 5-minute micro-breaks during work and engage in regular outdoor relaxation to buffer cortisol accumulation.");
+        recommendations.push("Stress: Take short 5-minute breathers during your workday to stretch, walk around, and prevent stress from building up.");
     } else {
-        recommendations.push("Stress Management: Stress is well-managed. Continue healthy mindfulness and social connection habits.");
+        recommendations.push("Stress: Your stress is well-managed. Continue taking time for yourself and doing activities you enjoy.");
     }
 
     if (a.activity === "sedentary") {
-        recommendations.push("Physical Fitness: Sedentary lifestyle identified. Start with accessible movement: break prolonged sitting every 45 minutes, and build a routine of 20–30 minutes of daily brisk walking.");
+        recommendations.push("Daily Movement: Try not to sit for hours at a time. Stand up every 45 minutes and aim for a 20 to 30-minute brisk walk every day.");
     } else if (a.activity === "light") {
-        recommendations.push("Physical Fitness: Progress your baseline by adding 30 minutes of moderate aerobic training (cycling, jogging, swimming) 4–5 days per week plus 2 days of bodyweight resistance.");
+        recommendations.push("Daily Movement: Build on your daily routine by adding 30 minutes of walking, cycling, or swimming most days, plus simple bodyweight exercises.");
     } else {
-        recommendations.push("Physical Fitness: Great activity foundation. Maintain consistent moderate-to-vigorous exercise and include strength/resistance training to safeguard joint mobility and metabolic mass.");
+        recommendations.push("Daily Movement: You have a great exercise foundation. Keep up regular movement and include simple strength exercises (like squats or push-ups) twice a week.");
     }
 
     if (a.diet === "highSugarFat") {
-        recommendations.push("Nutritional Quality: High intake of processed sugars and saturated fats reported. Swap fried and ultra-processed snacks for antioxidant-rich fruits, raw nuts, seeds, and extra virgin olive oil.");
+        recommendations.push("Food Habits: You reported eating a lot of sweet or fatty foods. Try swapping fried snacks and sugary treats for fresh fruits, nuts, and home-cooked meals.");
     } else if (a.diet === "irregular") {
-        recommendations.push("Nutritional Consistency: Irregular meal patterns disrupt metabolic rhythms and insulin response. Set consistent daily meal windows to stabilize energy and digestive health.");
+        recommendations.push("Food Habits: Try to eat your meals around the same time every day. This keeps your energy steady and helps digestion.");
     } else {
-        recommendations.push("Nutritional Quality: Balanced dietary pattern reported. Keep diversifying plant foods (aim for 25+ different plant varieties weekly) to enrich the gut microbiome.");
+        recommendations.push("Food Habits: Great job eating a balanced diet! Keep enjoying a colorful mix of vegetables, fruits, and whole foods.");
     }
 
     if (a.smoking === "yes" || a.smoking === "occasionally") {
-        recommendations.push("Cardiovascular Risk: Smoking dramatically accelerates arterial stiffness and endothelial damage. Quitting smoking cuts excess coronary heart disease risk by half within 1 year.");
+        recommendations.push("Smoking: Quitting or cutting back on smoking quickly protects your heart and helps you breathe much easier.");
     }
     if (a.alcohol === "frequent") {
-        recommendations.push("Metabolic Recovery: Frequent alcohol consumption disrupts restorative REM sleep, elevates triglycerides, and increases liver workload. Aim for at least 3–4 alcohol-free days weekly.");
+        recommendations.push("Alcohol: If you drink frequently, try to have at least 3 or 4 alcohol-free days each week to give your body and liver a rest.");
     }
 
     if (symptoms.includes("chestPain") || symptoms.includes("shortnessOfBreath")) {
-        recommendations.push("⚠️ Critical Symptom Alert: Reported chest discomfort or shortness of breath should be assessed promptly by a healthcare professional, especially if exertion-triggered.");
+        recommendations.push("⚠️ Important Alert: Chest pain or trouble breathing can be serious. Please see a doctor or visit an urgent care center promptly.");
     } else if (symptoms.includes("frequentUrination") || symptoms.includes("excessiveThirst") || symptoms.includes("blurredVision")) {
-        recommendations.push("Symptom Correlation: Frequent urination and increased thirst are recognized indicators for glucose intolerance; consider requesting an HbA1c test from your doctor.");
+        recommendations.push("Notice: Frequent urination or constant thirst can be signs of high blood sugar. Consider asking your doctor for a routine blood test.");
     } else if (symptoms.includes("fatigue") || symptoms.includes("dizziness") || symptoms.includes("headache")) {
-        recommendations.push("Symptom Notice: Persistent fatigue and headaches often correlate with chronic dehydration, electrolyte shifts, or sleep debt. Increase daily water intake (2–2.5L) and monitor duration.");
+        recommendations.push("Notice: Frequent tiredness or headaches often come from not drinking enough water or missing sleep. Drink 8–10 glasses of water daily and rest well.");
     }
 
-    recommendations.push("Educational Note: This assessment is designed for educational health awareness and does not replace medical diagnosis, consultation, or treatment by a licensed physician.");
+    recommendations.push("Educational Note: This assessment is for health awareness and does not replace medical advice or diagnosis from a doctor.");
 
     return {
         conditions: topConditions,

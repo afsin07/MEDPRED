@@ -60,7 +60,7 @@ function humanize(v) {
 }
 
 /* ==========================================================================
-   DEEP CLINICAL & LIFESTYLE INSIGHTS GENERATOR
+   DEEP CLINICAL & LIFESTYLE INSIGHTS GENERATOR (SIMPLE, CLEAR ENGLISH)
    ========================================================================== */
 function buildDetailedInsights(a, r) {
     const insights = [];
@@ -79,149 +79,149 @@ function buildDetailedInsights(a, r) {
         insights.push({
             icon: "fa-triangle-exclamation",
             color: "red",
-            badge: "Critical Alert",
-            text: "Reported symptoms include chest pain or shortness of breath. These are critical physiological markers that require professional medical evaluation without delay."
+            badge: "Important Alert",
+            text: "You reported chest pain or trouble breathing. Please do not ignore these signs — see a doctor right away for a safe check-up."
         });
     }
 
-    // 2. Blood Pressure & Cardiovascular Insights
+    // 2. Blood Pressure & Heart
     if (bp === "high") {
         insights.push({
             icon: "fa-heart-pulse",
             color: "amber",
-            badge: "Cardiovascular Load",
-            text: "Reported blood pressure is elevated. Persistent arterial hypertension increases workload on coronary vessels and heart muscle; dietary sodium reduction and regular monitoring are advised."
+            badge: "Blood Pressure",
+            text: "Your blood pressure is higher than normal. Cutting back on salt, walking every day, and getting it checked by a doctor will help protect your heart."
         });
     } else if (bp === "low") {
         insights.push({
             icon: "fa-droplet",
             color: "blue",
             badge: "Blood Pressure",
-            text: "Reported blood pressure is on the lower side. Ensure steady daily hydration, adequate electrolyte intake, and avoid rapid standing to prevent postural lightheadedness."
+            text: "Your blood pressure is on the lower side. Drink plenty of water and stand up slowly from sitting or lying down to avoid dizziness."
         });
     } else {
         insights.push({
             icon: "fa-circle-check",
             color: "teal",
-            badge: "Cardiovascular Health",
-            text: "Blood pressure is in the optimal range (<120/80 mmHg). Preserving aerobic fitness and limiting processed sodium maintains healthy arterial elasticity over time."
+            badge: "Heart Health",
+            text: "Your blood pressure is in a healthy range (< 120/80 mmHg). Staying active and eating wholesome food will help keep your heart strong."
         });
     }
 
-    // 3. Blood Sugar & Metabolic Profile
+    // 3. Blood Sugar
     if (sugar === "high") {
         insights.push({
             icon: "fa-vial",
             color: "amber",
-            badge: "Metabolic Biomarker",
-            text: "Fasting blood sugar is flagged high. Elevated circulating glucose can lead to microvascular stress; pairing complex carbohydrates with soluble fiber and taking post-meal walks optimizes insulin sensitivity."
+            badge: "Blood Sugar",
+            text: "Your blood sugar is on the higher side. Cutting down on sugary drinks and sweets, and taking a short walk after meals, will help bring it down."
         });
     } else {
         insights.push({
             icon: "fa-circle-check",
             color: "teal",
-            badge: "Glucose Regulation",
-            text: "Fasting blood sugar is currently within normal limits. Continuing to minimize refined sugary beverages supports sustained metabolic flexibility."
+            badge: "Blood Sugar",
+            text: "Your blood sugar is in a healthy normal range. Continuing to avoid sugary drinks will keep your energy levels steady throughout the day."
         });
     }
 
-    // 4. Sleep Architecture & Circadian Rhythm
+    // 4. Sleep
     if (sleep < 6) {
         insights.push({
             icon: "fa-bed",
             color: "amber",
-            badge: "Circadian Deficit",
-            text: `Reported sleep is ${sleep} hours/day. Chronic sleep restriction under 6 hours elevates nocturnal cortisol, impairs daytime insulin sensitivity, and increases inflammatory markers.`
+            badge: "Low Sleep",
+            text: `You reported sleeping only ${sleep} hours a night. Getting less than 6 hours makes you feel tired and stressed. Aim for 7 to 8 hours to help your body recharge.`
         });
     } else if (sleep >= 7 && sleep <= 9) {
         insights.push({
             icon: "fa-circle-check",
             color: "teal",
-            badge: "Restorative Sleep",
-            text: `Sleep duration (${sleep} hours) is within the optimal adult biological window, supporting immune surveillance, memory consolidation, and cellular tissue repair.`
+            badge: "Great Sleep",
+            text: `You get ${sleep} hours of sleep a night, which is right in the ideal range. This gives your body and brain plenty of time to rest and recover.`
         });
     } else if (sleep > 9) {
         insights.push({
             icon: "fa-moon",
             color: "blue",
-            badge: "Sleep Pattern",
-            text: `Reported sleep is ${sleep} hours/day. Prolonged sleep accompanied by waking fatigue may indicate fragmented sleep architecture or unaddressed respiratory resistance.`
+            badge: "Long Sleep",
+            text: `You reported sleeping ${sleep} hours a night. If you still wake up feeling tired, check if your room is quiet and comfortable.`
         });
     }
 
-    // 5. Stress Load & Autonomic Nervous System
+    // 5. Stress
     if (stress >= 7) {
         insights.push({
             icon: "fa-brain",
             color: "red",
-            badge: "Autonomic Strain",
-            text: `Stress index is elevated at ${stress}/10. Sustained sympathetic nervous system activation contributes to elevated resting heart rate and gastrointestinal tension.`
+            badge: "High Stress",
+            text: `Your stress rating is high (${stress}/10). High stress can make you tense, tired, and irritable. Taking daily 10-minute quiet breaks will bring quick relief.`
         });
     } else if (stress >= 5) {
         insights.push({
             icon: "fa-heart-pulse",
             color: "amber",
             badge: "Moderate Stress",
-            text: `Reported stress index is ${stress}/10. While manageable, setting deliberate workday micro-breaks and evening wind-down rituals buffers against cumulative burnout.`
+            text: `Your stress rating is ${stress}/10. Taking regular 5-minute breathers during busy days will prevent stress from building up.`
         });
     } else {
         insights.push({
             icon: "fa-circle-check",
             color: "teal",
             badge: "Stress Balance",
-            text: `Reported stress index (${stress}/10) is well regulated, supporting healthy heart rate variability and sustained immune competence.`
+            text: `Your stress level is well balanced (${stress}/10). Keep making time for hobbies and friends to stay feeling relaxed.`
         });
     }
 
-    // 6. Physical Activity & Musculoskeletal Health
+    // 6. Physical Activity
     if (activity === "sedentary") {
         insights.push({
             icon: "fa-person-running",
             color: "amber",
-            badge: "Inactivity Risk",
-            text: "A sedentary lifestyle significantly blunts muscle glucose uptake and lipoprotein lipase activity. Introducing 20–30 minutes of daily brisk walking yields immediate metabolic benefits."
+            badge: "Daily Movement",
+            text: "You spend most of the day sitting. Adding just 20 to 30 minutes of brisk walking every day will give you more energy and protect your heart."
         });
     } else if (activity === "active" || activity === "moderate") {
         insights.push({
             icon: "fa-circle-check",
             color: "teal",
             badge: "Active Lifestyle",
-            text: "Consistent physical activity provides potent systemic anti-inflammatory benefits, reinforces bone mineral density, and preserves cardiovascular stamina."
+            text: "You stay active regularly! Daily movement keeps your heart healthy, strengthens your muscles, and keeps your mood high."
         });
     }
 
-    // 7. Nutrition & Inflammatory Index
+    // 7. Food & Diet
     if (diet === "highSugarFat") {
         insights.push({
             icon: "fa-utensils",
             color: "amber",
-            badge: "Dietary Quality",
-            text: "A diet high in processed sugars and saturated fats promotes low-grade vascular inflammation. Shifting to whole Mediterranean-style unrefined foods aids endothelial health."
+            badge: "Food Habits",
+            text: "Your diet includes many sugary or fried foods. Swapping packaged snacks for fresh fruit, nuts, and home-cooked meals will give you cleaner energy."
         });
     } else if (diet === "irregular") {
         insights.push({
             icon: "fa-clock",
             color: "blue",
-            badge: "Meal Timing",
-            text: "Irregular meal timing disrupts peripheral metabolic circadian clocks. Establishing predictable meal windows stabilizes digestive enzyme secretions and energy levels."
+            badge: "Meal Times",
+            text: "Eating at irregular times can upset your stomach and energy. Try to eat your meals around the same time each day."
         });
     }
 
-    // 8. Modifiable Substance Factors
+    // 8. Smoking & Alcohol
     if (smoking === "yes" || smoking === "occasionally") {
         insights.push({
             icon: "fa-smoking",
             color: "red",
-            badge: "Vascular Risk",
-            text: "Smoking is a primary modifiable factor driving endothelial damage and coronary artery disease. Cessation reduces cardiovascular event risk by 50% within twelve months."
+            badge: "Smoking Impact",
+            text: "Smoking strains your heart and lungs. Cutting down or quitting quickly improves your breathing and cuts heart disease risk by half within a year."
         });
     }
     if (alcohol === "frequent") {
         insights.push({
             icon: "fa-wine-bottle",
             color: "amber",
-            badge: "Liver & Sleep Impact",
-            text: "Frequent alcohol consumption elevates nighttime resting heart rate and fragments restorative REM sleep. Introducing alcohol-free days promotes liver recovery."
+            badge: "Alcohol Habits",
+            text: "Drinking alcohol frequently can disturb your sleep and tire your body. Having 3 to 4 alcohol-free days a week will help you feel much more refreshed."
         });
     }
 
@@ -229,7 +229,7 @@ function buildDetailedInsights(a, r) {
 }
 
 /* ==========================================================================
-   PERSONALIZED ACTIONABLE WELLNESS & LIFESTYLE TIPS
+   PERSONALIZED ACTIONABLE WELLNESS & LIFESTYLE TIPS (SIMPLE, CLEAR ENGLISH)
    ========================================================================== */
 function buildActionableTips(a, r) {
     const tips = [];
@@ -253,9 +253,9 @@ function buildActionableTips(a, r) {
             impact: "High Impact",
             impactClass: "high",
             icon: "fa-apple-whole",
-            title: "Pair Carbohydrates with Fiber & Protein",
-            desc: "Rapid blood glucose spikes occur when refined carbs are consumed alone. Combine whole grains with soluble fiber (chia, oats, broccoli) and lean protein (eggs, tofu, poultry) to slow gastric emptying.",
-            action: "Add 1 tablespoon of chia seeds or flaxseeds to your morning meal to stabilize glucose absorption."
+            title: "Eat More Fiber & Protein with Your Meals",
+            desc: "Eating sugary foods or white bread alone makes your blood sugar spike and crash quickly. Adding fiber (like oats, vegetables, or seeds) and protein (like eggs, nuts, or chicken) helps your body digest slowly and keeps your energy steady.",
+            action: "Add a spoonful of chia seeds, nuts, or a boiled egg to your breakfast to keep your energy steady all morning."
         });
     }
 
@@ -267,9 +267,9 @@ function buildActionableTips(a, r) {
             impact: "High Impact",
             impactClass: "high",
             icon: "fa-heart-pulse",
-            title: "Adopt the Low-Sodium DASH Eating Plan",
-            desc: "Excess dietary sodium draws water into the bloodstream, elevating arterial pressure. The DASH diet emphasizes potassium, calcium, and magnesium to naturally relax vascular walls.",
-            action: "Limit sodium intake to under 1,500–2,000 mg/day by cooking fresh and swapping table salt for herbs, garlic, and lemon."
+            title: "Cut Down on Salt & Eat Potassium Foods",
+            desc: "Too much salt holds extra water in your blood, raising your blood pressure. Eating less salt and choosing potassium-rich foods (like bananas, spinach, and avocados) helps relax your blood vessels.",
+            action: "Flavor your food with fresh herbs, garlic, and lemon instead of table salt, and avoid heavily salted snacks."
         });
     }
 
@@ -280,9 +280,9 @@ function buildActionableTips(a, r) {
         impact: "Daily Routine",
         impactClass: "positive",
         icon: "fa-bottle-water",
-        title: "Cellular Hydration Protocol",
-        desc: "Optimal hydration maintains circulating plasma volume, aids kidney filtration, and prevents false hunger cues and sluggish daytime cognitive function.",
-        action: "Drink 500ml of water within 15 minutes of waking, and aim for 2.2–3.0 liters total across the day."
+        title: "Drink Enough Water Throughout the Day",
+        desc: "Drinking enough water keeps your body working smoothly, prevents headaches, cleans out waste, and stops you from feeling tired or overly hungry.",
+        action: "Drink a large glass of water right after waking up, and aim for 8 to 10 glasses total across the day."
     });
 
     if (diet === "irregular") {
@@ -293,9 +293,9 @@ function buildActionableTips(a, r) {
             impact: "Daily Routine",
             impactClass: "positive",
             icon: "fa-utensils",
-            title: "Synchronize Consistent Meal Windows",
-            desc: "Irregular eating times confuse metabolic insulin release. Consuming meals inside a consistent 10-to-12 hour daily window enhances mitochondrial digestion and metabolic pacing.",
-            action: "Set fixed breakfast, lunch, and dinner times within a 30-minute window each day."
+            title: "Eat Your Meals at Regular Times",
+            desc: "Skipping meals or eating at random hours confuses your stomach and body clock. Having meals around the same time each day gives you steady energy and prevents overeating.",
+            action: "Try to eat your breakfast, lunch, and dinner around the same time every day."
         });
     }
 
@@ -308,9 +308,9 @@ function buildActionableTips(a, r) {
             impact: "High Impact",
             impactClass: "high",
             icon: "fa-person-walking",
-            title: "10-Minute Post-Meal Glucose Clearance Walks",
-            desc: "Contracting leg muscles (soleus and quadriceps) immediately after eating stimulates non-insulin mediated glucose transport (GLUT4), reducing post-prandial blood sugar spikes by up to 30%.",
-            action: "Take a relaxed 10-to-15 minute walk after your largest meal of the day."
+            title: "Take a 10-Minute Walk After Meals",
+            desc: "Taking a short, easy walk right after eating helps your leg muscles use up blood sugar naturally. This prevents tiredness and keeps your sugar levels in check.",
+            action: "Take a relaxed 10 to 15-minute walk after your largest meal of the day."
         });
         tips.push({
             category: "fitness",
@@ -319,9 +319,9 @@ function buildActionableTips(a, r) {
             impact: "Daily Habit",
             impactClass: "positive",
             icon: "fa-stopwatch-20",
-            title: "Break Prolonged Sedentary Bouts",
-            desc: "Sitting uninterrupted for longer than 60 minutes shuts down lower body circulation. Micro-movements reactivate vascular endothelial nitric oxide release.",
-            action: "Set a timer to stand up, stretch, or do 10 gentle bodyweight calf raises every 45 minutes of desk work."
+            title: "Stand Up and Move Around Every Hour",
+            desc: "Sitting for hours at a time makes you stiff and slows your blood flow. Taking short 1-minute movement breaks refreshes your brain and keeps your heart healthy.",
+            action: "Set a reminder to stand up, stretch your arms, or walk around for 1-2 minutes every hour during desk work."
         });
     } else {
         tips.push({
@@ -331,9 +331,9 @@ function buildActionableTips(a, r) {
             impact: "Positive Habit",
             impactClass: "positive",
             icon: "fa-dumbbell",
-            title: "Maintain Resistance & Strength Training",
-            desc: "Skeletal muscle mass is the primary reservoir for glucose disposal and metabolic protection. Weekly progressive resistance training preserves joint integrity and bone mineral density.",
-            action: "Maintain at least 2 resistance training sessions weekly targeting major muscle groups."
+            title: "Keep Moving & Add Light Strength Exercises",
+            desc: "You already have great activity habits! Adding simple strength exercises (like bodyweight squats, push-ups, or light weights) keeps your muscles, bones, and joints strong.",
+            action: "Keep up your regular exercise and do 2 short sessions of strength exercises each week."
         });
     }
 
@@ -346,9 +346,9 @@ function buildActionableTips(a, r) {
             impact: "High Impact",
             impactClass: "high",
             icon: "fa-moon",
-            title: "Establish a 45-Minute Digital Curfew",
-            desc: "Blue-spectrum light emitted from phones and screens suppresses melatonin synthesis by up to 50%, delaying deep REM and slow-wave physical recovery sleep phases.",
-            action: "Switch phone and screens off 45 minutes before bed; replace with reading, stretching, or dim warm lighting."
+            title: "Put Screens Away 45 Minutes Before Bed",
+            desc: "The bright light from phones, tablets, and TVs tricks your brain into thinking it is daytime. This makes it harder to fall asleep and stops you from getting deep rest.",
+            action: "Turn off your phone and TV 45 minutes before sleep. Read a book, stretch, or listen to calming music instead."
         });
     }
 
@@ -359,9 +359,9 @@ function buildActionableTips(a, r) {
         impact: "Daily Habit",
         impactClass: "positive",
         icon: "fa-sun",
-        title: "Morning Circadian Sunlight Anchor",
-        desc: "Morning natural sunlight directly activates melanopsin retinal ganglion cells, synchronizing your central suprachiasmatic nucleus master clock and boosting alertness.",
-        action: "Step outside for 10–15 minutes of natural sunlight within 60 minutes of waking (without sunglasses)."
+        title: "Get Morning Sunlight to Wake Up Naturally",
+        desc: "Stepping outside into morning sunlight resets your internal body clock. It makes you feel alert during the day and helps you fall asleep faster at night.",
+        action: "Step outside or stand by an open window for 10 to 15 minutes of natural sunlight soon after waking up."
     });
 
     // --- STRESS MANAGEMENT TIPS ---
@@ -373,9 +373,9 @@ function buildActionableTips(a, r) {
             impact: "Priority Action",
             impactClass: "priority",
             icon: "fa-brain",
-            title: "4-7-8 Breathing for Autonomic Reset",
-            desc: "Extended exhalations stimulate the vagus nerve, releasing acetylcholine to rapidly slow cardiac pacing and disengage acute sympathetic fight-or-flight tension.",
-            action: "Inhale through the nose for 4s, hold for 7s, exhale completely through mouth for 8s. Repeat for 4 cycles."
+            title: "Try the 4-7-8 Deep Breathing Exercise",
+            desc: "When you feel stressed, your breathing becomes fast and shallow. Taking slow, deep breaths tells your brain you are safe and quickly calms down your heart rate.",
+            action: "Breathe in through your nose for 4 seconds, hold your breath for 7 seconds, and slowly exhale through your mouth for 8 seconds. Repeat 4 times."
         });
         tips.push({
             category: "stress",
@@ -384,9 +384,9 @@ function buildActionableTips(a, r) {
             impact: "Daily Habit",
             impactClass: "high",
             icon: "fa-leaf",
-            title: "Deliberate Recovery & Cortisol Offloading",
-            desc: "Unmitigated chronic psychological stress elevates resting cortisol and nocturnal blood pressure. Regular time spent in green spaces or mindfulness restores cognitive balance.",
-            action: "Reserve 15 minutes of quiet time each afternoon for a stroll in nature or guided mindfulness."
+            title: "Take 15 Minutes to Relax in Fresh Air",
+            desc: "Ongoing daily pressure can leave you feeling drained and raise your blood pressure. Taking a few quiet minutes outdoors in fresh air helps clear your mind.",
+            action: "Set aside 15 minutes each afternoon to step away from work, go outside, or do something peaceful you enjoy."
         });
     } else {
         tips.push({
@@ -396,9 +396,9 @@ function buildActionableTips(a, r) {
             impact: "Positive Habit",
             impactClass: "positive",
             icon: "fa-spa",
-            title: "Proactive Stress Inoculation",
-            desc: "Maintaining strong social ties and engaging in enjoyable hobbies builds systemic cognitive resilience against future life stressors.",
-            action: "Continue setting firm work-life boundaries and dedicate time weekly to social and creative pursuits."
+            title: "Protect Your Free Time & Hobbies",
+            desc: "You are doing a great job managing stress! Spending time with friends, family, and hobbies keeps your mood high and protects you from burnout.",
+            action: "Keep setting clear boundaries between work and personal time, and make room for activities you love."
         });
     }
 
@@ -411,9 +411,9 @@ function buildActionableTips(a, r) {
             impact: "Priority Action",
             impactClass: "priority",
             icon: "fa-stethoscope",
-            title: "Schedule Comprehensive Clinical Biomarker Panel",
-            desc: "Educational risk scores point to physiological areas deserving professional validation. A primary care physician can review your resting vitals, lipid profile, and HbA1c.",
-            action: "Contact your primary healthcare provider to schedule an annual routine metabolic and cardiovascular check."
+            title: "Book a Routine Check-Up with Your Doctor",
+            desc: "This health assessment points out areas you can improve. A simple visit with a doctor for a routine blood pressure and blood test will give you full peace of mind.",
+            action: "Contact your local clinic or family doctor to schedule a routine health check-up."
         });
     }
 
@@ -425,9 +425,9 @@ function buildActionableTips(a, r) {
             impact: "High Impact",
             impactClass: "priority",
             icon: "fa-ban",
-            title: "Explore Evidence-Based Smoking Cessation",
-            desc: "Within 2 weeks to 3 months of smoking cessation, lung function and circulatory perfusion increase significantly, while heart attack risk begins a steep decline.",
-            action: "Consult a healthcare provider or national quitline regarding nicotine replacement therapy and behavioral cessation tools."
+            title: "Take Steps to Cut Down or Quit Smoking",
+            desc: "Quitting or cutting back on smoking quickly improves your breathing, gives you more daily energy, and cuts your risk of heart problems in half within one year.",
+            action: "Talk to your doctor or explore free quit-smoking apps and guides to help you cut back safely."
         });
     }
 
@@ -439,9 +439,9 @@ function buildActionableTips(a, r) {
             impact: "Clinical Step",
             impactClass: "priority",
             icon: "fa-notes-medical",
-            title: "Document Symptom Timing & Triggers",
-            desc: "Keeping an objective log of when symptoms occur (e.g. relation to meals, exertion, or sleep) provides invaluable diagnostic data for your doctor.",
-            action: "Note down symptom frequency, duration, and intensity in a simple notebook or phone app to show your physician."
+            title: "Write Down When You Notice Symptoms",
+            desc: "Keeping a simple note of when symptoms happen (such as after eating, during exercise, or when tired) makes it much easier for your doctor to understand what is going on.",
+            action: "Jot down how you feel and when it happens in your phone notes so you can easily show your doctor."
         });
     }
 
@@ -449,55 +449,55 @@ function buildActionableTips(a, r) {
 }
 
 /* ==========================================================================
-   7-DAY ACTION PLAN CHECKLIST
+   7-DAY ACTION PLAN CHECKLIST (SIMPLE, CLEAR ENGLISH)
    ========================================================================== */
 function buildActionChecklist(a, r) {
     const list = [
         {
             id: "chk-1",
-            title: "Morning Hydration Protocol",
-            sub: "Drink 500ml water upon waking before coffee or tea to rehydrate cells."
+            title: "Morning Glass of Water",
+            sub: "Drink a large glass of water right when you wake up to rehydrate your body."
         },
         {
             id: "chk-2",
-            title: "Daily 10-Minute Post-Meal Stroll",
-            sub: "Take a gentle 10-15m walk after lunch or dinner to enhance natural glucose clearance."
+            title: "10-Minute Walk After Meals",
+            sub: "Take a relaxed 10-15 minute walk after lunch or dinner to help digestion."
         },
         {
             id: "chk-3",
-            title: "Circadian Sunlight Exposure",
-            sub: "Step outside for 10 minutes of direct morning sunlight within an hour of waking."
+            title: "10 Minutes of Morning Sunlight",
+            sub: "Step outside into natural morning sunlight to help reset your sleep clock."
         },
         {
             id: "chk-4",
-            title: "Evening Digital Screen Curfew",
-            sub: "Discontinue smartphone, tablet, and laptop screens 45 minutes prior to sleep."
+            title: "Screens Off Before Bed",
+            sub: "Turn off your phone, tablet, and TV 45 minutes before going to sleep."
         },
         {
             id: "chk-5",
-            title: "5-Minute Autonomic Breathwork",
-            sub: "Practice 4-7-8 breathing or slow physiological sighs to release stored muscular tension."
+            title: "5 Minutes of Calming Breathing",
+            sub: "Take slow, deep breaths to release body tension and relax your mind."
         },
         {
             id: "chk-6",
-            title: "Schedule Routine Medical Checkup",
-            sub: "Contact your primary care clinic to book routine annual vitals & blood screening."
+            title: "Book a Routine Doctor Check-Up",
+            sub: "Call your clinic to schedule a routine yearly health check for peace of mind."
         }
     ];
 
     if (a.bloodPressure === "high") {
         list[1] = {
             id: "chk-bp",
-            title: "Cardiovascular Sodium Check",
-            sub: "Choose whole fresh foods and keep total daily sodium below 2,000 mg."
+            title: "Watch Your Daily Salt",
+            sub: "Choose fresh whole foods and avoid adding extra salt at the dinner table."
         };
     }
 
     if (a.smoking === "yes" || a.smoking === "occasionally") {
         list[4] = {
             id: "chk-smoke",
-            title: "Tobacco Reduction / Cessation Step",
-            sub: "Identify key daily triggers and speak with a healthcare provider about cessation tools."
+            title: "Cut Back on Smoking",
+            sub: "Notice what triggers your urge to smoke and try a healthy swap like drinking water or walking."
         };
     }
 
@@ -722,7 +722,7 @@ function renderReport(r) {
               <h2 style="font-size:24px;margin:0">${escapeHtml(r.topCondition || "Overall Health Pattern")}</h2>
             </div>
             <p style="font-size:14px;color:var(--text-secondary);line-height:1.6;margin:0">
-              Composite wellness assessment analyzing cardiovascular indicators, blood sugar, lifestyle habits, circadian sleep metrics, and reported symptoms.
+              Clear breakdown of your overall health, daily habits, sleep, stress, and lifestyle tips based on your answers.
             </p>
           </div>
         </div>
@@ -788,7 +788,7 @@ function renderReport(r) {
           </section>
 
           <section class="mp-panel">
-            <h4><i class="fa-solid fa-lightbulb" style="color:var(--accent-teal)"></i> Key Clinical &amp; Lifestyle Insights</h4>
+            <h4><i class="fa-solid fa-lightbulb" style="color:var(--accent-teal)"></i> Key Health &amp; Lifestyle Insights</h4>
             <div class="mp-insights">${insightHtml}</div>
           </section>
         </div>
@@ -845,7 +845,7 @@ function renderReport(r) {
           </section>
 
           <section class="mp-panel">
-            <h4><i class="fa-solid fa-clipboard-check" style="color:var(--accent-teal)"></i> Personalized Clinical Guidance</h4>
+            <h4><i class="fa-solid fa-clipboard-check" style="color:var(--accent-teal)"></i> Helpful Health Tips &amp; Guidance</h4>
             <div class="mp-recommendations">${recs}</div>
           </section>
         </div>
@@ -856,7 +856,7 @@ function renderReport(r) {
             <i class="fa-solid fa-lightbulb"></i> Actionable Health Insights &amp; Personalized Tips
           </div>
           <div class="mp-section-subtitle">
-            Targeted evidence-based lifestyle adjustments, dietary protocols, and stress resilience practices tailored to your assessment answers.
+            Simple, practical daily tips and lifestyle habits customized to your assessment answers to help you feel your best.
           </div>
         </div>
 
