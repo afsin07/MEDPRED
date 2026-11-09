@@ -516,6 +516,8 @@ function renderReport(r) {
     const answers = parseJSON(r.answers, {});
     const score = Math.max(0, Math.min(100, Number(r.healthScore) || 0));
     const level = humanize(r.riskLevel || "low");
+    const sleep = Number(answers.sleepHours) || 7;
+    const stress = Number(answers.stressLevel) || 5;
 
     const insights = buildDetailedInsights(answers, r);
     const tips = buildActionableTips(answers, r);
