@@ -9,16 +9,20 @@ services:
       - key: DB_HOST
         sync: false
       - key: DB_PORT
-        value: "3306"
+        sync: false
       - key: DB_USER
         sync: false
       - key: DB_PASSWORD
         sync: false
       - key: DB_NAME
-        value: medipredict
+        sync: false
+      - key: DB_SSL_CA
+        value: ca.pem
       - key: SESSION_SECRET
         sync: false
       - key: CORS_ORIGINS
         sync: false
       - key: SESSION_COOKIE_SECURE
         value: "true"
+      - key: SESSION_COOKIE_SAMESITE
+        value: "None"

@@ -1,42 +1,80 @@
 import os
+from pathlib import Path
+from dotenv import load_dotenv
 import mysql.connector
 from mysql.connector import pooling
 
-# Path to the Aiven CA certificate. Defaults to ca.pem sitting next to this
-# file (i.e. backend/ca.pem), which is where Aiven's downloaded cert goes.
-# Set DB_SSL_CA to override, or leave DB_SSL_CA="" to disable SSL (e.g. for
-# a local MySQL install that doesn't use it).
-_DEFAULT_CA_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "ca.pem")
-DB_SSL_CA = os.getenv("DB_SSL_CA", _DEFAULT_CA_PATH)
+_BACKEND_DIR = os.path.dirname(os.path.abspath(__file__))
+_DEFAULT_CA_PATH = os.path.join(_BACKEND_DIR, "ca.pem")
 
-DB_CONFIG = {
-    "host": os.getenv("DB_HOST", "127.0.0.1"),
-    "port": int(os.getenv("DB_PORT", "3306")),
-    "user": os.getenv("DB_USER", "root"),
-    "password": os.getenv("DB_PASSWORD", ""),
-    "database": os.getenv("DB_NAME", "medipredict"),
-}
+# Ensure environment variables are loaded immediately
+load_dotenv(os.path.join(_BACKEND_DIR, ".env"))
+load_dotenv()
 
-# Aiven (and most managed MySQL providers) require SSL. Only attach the CA
-# if a real cert file is present on disk, so local dev without SSL still works.
-if DB_SSL_CA and os.path.isfile(DB_SSL_CA):
-    DB_CONFIG["ssl_ca"] = DB_SSL_CA
-    DB_CONFIG["ssl_verify_cert"] = True
+def get_db_config():
+    host = (os.getenv("DB_HOST") or "mysql-3e442ef2-jsafsinooorojxijwidn-9r493085x.h.aivencloud.com").strip()
+    try:
+        port = int(os.getenv("DB_PORT") or "26867")
+    except (ValueError, TypeError):
+        port = 26867
+    user = (os.getenv("DB_USER") or "avnadmin").strip()
+    password = os.getenv("DB_PASSWORD", "")
+    database = (os.getenv("DB_NAME") or "defaultdb").strip()
+
+    config = {
+        "host": host,
+        "port": port,
+        "user": user,
+        "password": password,
+        "database": database,
+    }
+
+    # Resolve CA path
+    raw_ca = os.getenv("DB_SSL_CA", "ca.pem")
+    ssl_ca_path = ""
+    if raw_ca:
+        raw_ca = raw_ca.strip()
+        if not os.path.isabs(raw_ca):
+            cand = os.path.join(_BACKEND_DIR, raw_ca)
+            if os.path.isfile(cand):
+                ssl_ca_path = cand
+            elif os.path.isfile(raw_ca):
+                ssl_ca_path = raw_ca
+        elif os.path.isfile(raw_ca):
+            ssl_ca_path = raw_ca
+
+    if not ssl_ca_path and os.path.isfile(_DEFAULT_CA_PATH):
+        ssl_ca_path = _DEFAULT_CA_PATH
+
+    # Attach SSL verification only for remote hosts (not localhost)
+    if host not in ("127.0.0.1", "localhost") and ssl_ca_path and os.path.isfile(ssl_ca_path):
+        config["ssl_ca"] = ssl_ca_path
+        config["ssl_verify_cert"] = True
+
+    return config
 
 _pool = None
 
 def init_database():
     global _pool
 
-    # Connect directly to the configured database. Managed MySQL services such
-    # as Aiven already provide the database (defaultdb in this project) and may
-    # not grant CREATE DATABASE privileges to the application user.
+    config = get_db_config()
+    pool_name = "medipredict_pool"
+
+    # Reset any existing pool registration to avoid PoolError
+    if pool_name in pooling._CONNECTION_POOLS:
+        try:
+            del pooling._CONNECTION_POOLS[pool_name]
+        except Exception:
+            pass
+
     _pool = pooling.MySQLConnectionPool(
-        pool_name="medipredict_pool",
+        pool_name=pool_name,
         pool_size=5,
-        **DB_CONFIG,
+        **config,
     )
-    conn = get_conn(); cur = conn.cursor()
+    conn = get_conn()
+    cur = conn.cursor()
     cur.execute("""CREATE TABLE IF NOT EXISTS users (
         id INT AUTO_INCREMENT PRIMARY KEY,
         name VARCHAR(255) NOT NULL,
@@ -58,9 +96,27 @@ def init_database():
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
         CONSTRAINT fk_health_reports_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci""")
-    conn.commit(); cur.close(); conn.close()
+    conn.commit()
+    cur.close()
+    conn.close()
 
 def get_conn():
     if _pool is None:
         raise RuntimeError("Database pool is not initialized")
-    return _pool.get_connection()
+    conn = _pool.get_connection()
+    try:
+        conn.ping(reconnect=True, attempts=3, delay=1)
+    except Exception:
+        pass
+    return conn
+
+def ping_db():
+    if _pool is None:
+        return False
+    try:
+        conn = _pool.get_connection()
+        conn.ping(reconnect=True, attempts=2, delay=1)
+        conn.close()
+        return True
+    except Exception:
+        return False

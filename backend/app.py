@@ -3,14 +3,18 @@ import os
 from functools import wraps
 from datetime import timedelta
 
+from pathlib import Path
 from dotenv import load_dotenv
+
+_BACKEND_DIR = Path(__file__).resolve().parent
+load_dotenv(_BACKEND_DIR / ".env")
 load_dotenv()
 
 from flask import Flask, jsonify, request, session, redirect
 from flask_cors import CORS
 import bcrypt
 
-from db import init_database, get_conn
+from db import init_database, get_conn, ping_db
 from ml.model import predict
 
 app = Flask(__name__)
@@ -47,13 +51,22 @@ CORS(app, supports_credentials=True, origins=origins)
 
 MODEL_INFO = {"loaded": True, "type": "random-forest-health-risk-classifier", "version": "rf-educational-1.0", "purpose": "educational health-risk assessment only", "dataset": "synthetic-educational"}
 DB_READY = False
-try:
-    init_database()
-    DB_READY = True
-    print("[OK] MySQL connected and schema verified")
-except Exception as exc:
-    print(f"[WARN] MySQL unavailable: {exc}")
 
+def check_db():
+    global DB_READY
+    if DB_READY and ping_db():
+        return True
+    try:
+        init_database()
+        DB_READY = True
+        print("[OK] MySQL connected and schema verified")
+        return True
+    except Exception as exc:
+        DB_READY = False
+        print(f"[WARN] MySQL unavailable: {exc}")
+        return False
+
+check_db()
 print("[OK] Prediction service loaded: Random Forest educational risk classifier")
 
 
@@ -76,7 +89,7 @@ def db_json(value, fallback):
 
 @app.get("/api/health")
 def health():
-    return jsonify(success=True, status="running", project="MediPredict", backend="Flask", model=MODEL_INFO, database="connected" if DB_READY else "unavailable")
+    return jsonify(success=True, status="running", project="MediPredict", backend="Flask", model=MODEL_INFO, database="connected" if check_db() else "unavailable")
 
 @app.get("/api/model")
 def model_info():
@@ -106,7 +119,7 @@ def register():
         return jsonify(success=False, message="Name, email, and password are required"), 400
     if len(password) < 6:
         return jsonify(success=False, message="Password must be at least 6 characters long"), 400
-    if not DB_READY: return jsonify(success=False, message="Database unavailable"), 503
+    if not check_db(): return jsonify(success=False, message="Database unavailable"), 503
     conn=get_conn(); cur=conn.cursor(dictionary=True)
     try:
         cur.execute("SELECT id FROM users WHERE email=%s LIMIT 1", (email,))
@@ -120,7 +133,7 @@ def register():
 def login():
     data=request.get_json(silent=True) or {}; email=str(data.get("email", "")).strip().lower(); password=str(data.get("password", ""))
     if not email or not password: return jsonify(success=False, message="Email and password are required"), 400
-    if not DB_READY: return jsonify(success=False, message="Database unavailable"), 503
+    if not check_db(): return jsonify(success=False, message="Database unavailable"), 503
     conn=get_conn(); cur=conn.cursor(dictionary=True)
     try:
         cur.execute("SELECT id,name,email,password FROM users WHERE email=%s LIMIT 1", (email,)); user=cur.fetchone()
@@ -146,7 +159,7 @@ def logout():
 @app.get("/api/reports")
 @login_required
 def reports():
-    if not DB_READY: return jsonify(success=False,message="Database unavailable"),503
+    if not check_db(): return jsonify(success=False,message="Database unavailable"),503
     conn=get_conn(); cur=conn.cursor(dictionary=True)
     try:
         cur.execute("SELECT id,user_id AS userId,report_date AS date,answers,conditions,top_condition AS topCondition,risk_level AS riskLevel,health_score AS healthScore,recommendations,report_date AS createdAt FROM health_reports WHERE user_id=%s ORDER BY report_date DESC", (session["user"]["id"],))
@@ -159,7 +172,7 @@ def reports():
 @app.get("/api/reports/<int:report_id>")
 @login_required
 def report(report_id):
-    if not DB_READY: return jsonify(success=False,message="Database unavailable"),503
+    if not check_db(): return jsonify(success=False,message="Database unavailable"),503
     conn=get_conn(); cur=conn.cursor(dictionary=True)
     try:
         cur.execute("SELECT id,user_id AS userId,report_date AS date,answers,conditions,top_condition AS topCondition,risk_level AS riskLevel,health_score AS healthScore,recommendations,report_date AS createdAt FROM health_reports WHERE id=%s AND user_id=%s LIMIT 1", (report_id,session["user"]["id"]))
@@ -178,7 +191,7 @@ def report_payload(data):
 @app.post("/api/reports")
 @login_required
 def create_report():
-    if not DB_READY: return jsonify(success=False,message="Database unavailable"),503
+    if not check_db(): return jsonify(success=False,message="Database unavailable"),503
     try: r=report_payload(request.get_json(silent=True) or {})
     except ValueError as exc: return jsonify(success=False,message=str(exc)),400
     conn=get_conn(); cur=conn.cursor()
@@ -192,7 +205,7 @@ def create_report():
 @app.put("/api/reports/<int:report_id>")
 @login_required
 def update_report(report_id):
-    if not DB_READY: return jsonify(success=False,message="Database unavailable"),503
+    if not check_db(): return jsonify(success=False,message="Database unavailable"),503
     try: r=report_payload(request.get_json(silent=True) or {})
     except ValueError as exc: return jsonify(success=False,message=str(exc)),400
     conn=get_conn(); cur=conn.cursor()
@@ -206,7 +219,7 @@ def update_report(report_id):
 @app.delete("/api/reports/<int:report_id>")
 @login_required
 def delete_report(report_id):
-    if not DB_READY: return jsonify(success=False,message="Database unavailable"),503
+    if not check_db(): return jsonify(success=False,message="Database unavailable"),503
     conn=get_conn(); cur=conn.cursor()
     try:
         cur.execute("DELETE FROM health_reports WHERE id=%s AND user_id=%s", (report_id,session["user"]["id"])); conn.commit()
@@ -217,7 +230,7 @@ def delete_report(report_id):
 @app.get("/api/admin/users")
 @login_required
 def admin_users():
-    if not DB_READY: return jsonify(success=False,message="Database unavailable"),503
+    if not check_db(): return jsonify(success=False,message="Database unavailable"),503
     conn=get_conn(); cur=conn.cursor(dictionary=True)
     try:
         cur.execute("SELECT id,name,email,created_at FROM users ORDER BY created_at DESC"); rows=cur.fetchall(); return jsonify(success=True,count=len(rows),users=rows)
@@ -226,7 +239,7 @@ def admin_users():
 @app.get("/api/admin/reports")
 @login_required
 def admin_reports():
-    if not DB_READY: return jsonify(success=False,message="Database unavailable"),503
+    if not check_db(): return jsonify(success=False,message="Database unavailable"),503
     conn=get_conn(); cur=conn.cursor(dictionary=True)
     try:
         cur.execute("SELECT hr.id,hr.user_id, u.name AS userName,u.email AS userEmail,hr.top_condition,hr.risk_level,hr.health_score,hr.report_date AS created_at FROM health_reports hr LEFT JOIN users u ON hr.user_id=u.id ORDER BY hr.report_date DESC"); rows=cur.fetchall(); return jsonify(success=True,count=len(rows),reports=rows)
