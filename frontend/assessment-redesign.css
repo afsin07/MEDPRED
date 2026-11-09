@@ -265,6 +265,18 @@ input[type="range"]::-moz-range-thumb{width:17px;height:17px;background:#48c5b2;
   .disclaimer-box{background:#f3f9f7!important;border:1px solid #cfe3de!important;box-shadow:none!important;color:#2b3631!important;
     font-size:11px!important;margin-top:4px!important;break-inside:avoid;page-break-inside:avoid;}
   .disclaimer-box strong{color:#0f1714!important;}
+
+  /* Print adjustments for expanded insights & tips */
+  .mp-filter-tabs, .mp-plan-progress-wrapper, .mp-check-box { display: none !important; }
+  .mp-tips-grid { grid-template-columns: 1fr 1fr !important; gap: 8px !important; }
+  .mp-tip-card { background: #fff !important; border: 1px solid #d5dedb !important; padding: 10px !important; break-inside: avoid; page-break-inside: avoid; }
+  .mp-tip-title { color: #0f1714 !important; font-size: 13px !important; }
+  .mp-tip-desc { color: #3d4944 !important; font-size: 11px !important; }
+  .mp-tip-action-box { background: #f3f7f5 !important; border-left-color: #0d7f74 !important; color: #2b3631 !important; }
+  .mp-checklist-items { grid-template-columns: 1fr 1fr !important; gap: 6px !important; }
+  .mp-check-item { background: #fff !important; border: 1px solid #d5dedb !important; padding: 8px !important; break-inside: avoid; page-break-inside: avoid; }
+  .mp-check-title { color: #0f1714 !important; font-size: 11.5px !important; }
+  .mp-check-subtitle { color: #5f6b66 !important; font-size: 10.5px !important; }
 }
 
 /* ================================================================
@@ -374,3 +386,323 @@ input[type="range"]::-moz-range-thumb{width:17px;height:17px;background:#48c5b2;
   .stage-title{font-size:22px!important;}
   .mp-vitals{grid-template-columns:1fr!important;}
 }
+
+/* ================================================================
+   EXPANDED HEALTH INSIGHTS & PERSONALIZED TIPS SYSTEM
+   ================================================================ */
+.mp-section-header {
+  margin: 32px 0 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.mp-section-title {
+  font-family: var(--font-heading);
+  font-size: 20px;
+  font-weight: 700;
+  color: #eaf1ef;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.mp-section-title i {
+  color: var(--accent-teal);
+}
+.mp-section-subtitle {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* Category Filter Tabs */
+.mp-filter-tabs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+.mp-filter-btn {
+  background: #111a1f;
+  border: 1px solid #202e34;
+  color: #a6b5b2;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.mp-filter-btn:hover {
+  background: #18252c;
+  color: #eef5f3;
+  border-color: #2c3e46;
+}
+.mp-filter-btn.active {
+  background: rgba(56, 182, 164, 0.15);
+  color: var(--accent-teal);
+  border-color: var(--accent-teal);
+}
+.mp-filter-count {
+  background: #1d2b31;
+  padding: 2px 7px;
+  border-radius: 10px;
+  font-size: 10px;
+  font-weight: 700;
+}
+.mp-filter-btn.active .mp-filter-count {
+  background: var(--accent-teal);
+  color: #080b0d;
+}
+
+/* Tips Grid */
+.mp-tips-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 16px;
+  margin-bottom: 28px;
+}
+.mp-tip-card {
+  background: linear-gradient(145deg, #0f171c, #0b1216);
+  border: 1px solid #1f2d34;
+  border-radius: 14px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.mp-tip-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(56, 182, 164, 0.4);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.4);
+}
+.mp-tip-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.mp-tip-badge-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.mp-tip-cat-badge {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: rgba(56, 182, 164, 0.12);
+  color: var(--accent-teal);
+}
+.mp-tip-cat-badge.cat-nutrition { background: rgba(56, 182, 164, 0.12); color: #38b6a4; }
+.mp-tip-cat-badge.cat-fitness { background: rgba(76, 214, 225, 0.12); color: #4cd6e1; }
+.mp-tip-cat-badge.cat-sleep { background: rgba(147, 130, 255, 0.15); color: #a596ff; }
+.mp-tip-cat-badge.cat-stress { background: rgba(255, 140, 180, 0.15); color: #ff8cb4; }
+.mp-tip-cat-badge.cat-medical { background: rgba(255, 107, 107, 0.15); color: #ff6b6b; }
+.mp-tip-cat-badge.cat-lifestyle { background: rgba(56, 182, 164, 0.12); color: #38b6a4; }
+
+.mp-tip-impact-badge {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: #18252c;
+  color: #92a3a0;
+}
+.mp-tip-impact-badge.high { color: #f59e0b; background: rgba(245, 158, 11, 0.12); }
+.mp-tip-impact-badge.priority { color: #ef4444; background: rgba(239, 68, 68, 0.12); }
+.mp-tip-impact-badge.positive { color: #10b981; background: rgba(16, 185, 129, 0.12); }
+
+.mp-tip-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  background: #141f25;
+  color: var(--accent-teal);
+}
+.mp-tip-title {
+  font-family: var(--font-heading);
+  font-size: 15px;
+  font-weight: 700;
+  color: #f1f5f4;
+  margin: 0 0 8px;
+  line-height: 1.4;
+}
+.mp-tip-desc {
+  font-size: 12.5px;
+  color: #a2b1ae;
+  line-height: 1.55;
+  margin: 0 0 14px;
+}
+.mp-tip-action-box {
+  background: #131d23;
+  border-left: 3px solid var(--accent-teal);
+  border-radius: 0 8px 8px 0;
+  padding: 9px 12px;
+  font-size: 12px;
+  color: #d2dedb;
+  line-height: 1.45;
+}
+.mp-tip-action-box strong {
+  color: var(--accent-teal);
+}
+
+/* 7-Day Action Plan Checklist */
+.mp-action-plan-panel {
+  background: linear-gradient(145deg, #0e171c, #0a1014);
+  border: 1px solid #1f2d34;
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 24px;
+}
+.mp-plan-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-bottom: 18px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #1d2a30;
+}
+.mp-plan-title {
+  font-family: var(--font-heading);
+  font-size: 17px;
+  font-weight: 700;
+  color: #eef5f3;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.mp-plan-progress-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 12px;
+  color: #92a29f;
+}
+.mp-plan-progress-bar {
+  width: 120px;
+  height: 8px;
+  background: #17242a;
+  border-radius: 999px;
+  overflow: hidden;
+}
+.mp-plan-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #10b981, var(--accent-teal));
+  width: 0%;
+  transition: width 0.3s ease;
+}
+.mp-checklist-items {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 10px;
+}
+.mp-check-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 14px;
+  background: #121c22;
+  border: 1px solid #1c2930;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+.mp-check-item:hover {
+  background: #17242b;
+  border-color: #263842;
+}
+.mp-check-item.completed {
+  background: rgba(16, 185, 129, 0.08);
+  border-color: rgba(16, 185, 129, 0.3);
+}
+.mp-check-box {
+  width: 18px;
+  height: 18px;
+  border-radius: 5px;
+  border: 2px solid #3b4e57;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  color: transparent;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.mp-check-item.completed .mp-check-box {
+  background: #10b981;
+  border-color: #10b981;
+  color: #080b0d;
+}
+.mp-check-text {
+  flex: 1;
+}
+.mp-check-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #e5efec;
+  line-height: 1.35;
+  transition: color 0.2s ease;
+}
+.mp-check-item.completed .mp-check-title {
+  text-decoration: line-through;
+  color: #728481;
+}
+.mp-check-subtitle {
+  font-size: 11.5px;
+  color: #8b9a97;
+  margin-top: 3px;
+  line-height: 1.35;
+}
+
+/* Insight Cards Enhancement */
+.mp-insight {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 12px 14px;
+  background: #111b20;
+  border: 1px solid #1e2b31;
+  border-radius: 10px;
+  color: #bdc7c5;
+  font-size: 12.5px;
+  line-height: 1.5;
+  transition: border-color 0.2s ease;
+}
+.mp-insight:hover {
+  border-color: #2c3e46;
+}
+.mp-insight-badge {
+  font-size: 9.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-bottom: 4px;
+  display: inline-block;
+}
+.mp-insight-badge.teal { background: rgba(56, 182, 164, 0.15); color: var(--accent-teal); }
+.mp-insight-badge.amber { background: rgba(245, 158, 11, 0.15); color: #f59e0b; }
+.mp-insight-badge.red { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
+.mp-insight-badge.blue { background: rgba(96, 165, 250, 0.15); color: #60a5fa; }
+.mp-insight i.teal { color: var(--accent-teal); }
+.mp-insight i.amber { color: #f59e0b; }
+.mp-insight i.red { color: #ef4444; }
+.mp-insight i.blue { color: #60a5fa; }
+

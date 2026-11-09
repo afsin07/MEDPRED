@@ -68,6 +68,95 @@ def _condition_indicators(a):
     return candidates[:3]
 
 
+def _generate_recommendations_and_tips(a, risk, score, indicators):
+    recs = []
+
+    # 1. Primary Clinical Direction
+    if risk == 'High':
+        recs.append("Priority Medical Review: Your composite health profile indicates an elevated risk pattern. We recommend scheduling an in-person evaluation with a licensed physician to review vitals and symptoms.")
+    elif risk == 'Medium':
+        recs.append("Targeted Preventive Action: Moderate risk factors detected. Proactive lifestyle modifications over the next 30–60 days can significantly lower future health risks.")
+    else:
+        recs.append("Maintenance & Prevention: Your overall profile indicates low immediate risk. Continue reinforcing healthy daily routines and stay up to date with routine annual screenings.")
+
+    # 2. Blood Pressure Guidance
+    bp = a.get("bloodPressure", "normal")
+    if bp == "high":
+        recs.append("Cardiovascular & BP: Reported blood pressure is elevated. Reduce sodium intake (< 1,500–2,000 mg/day), incorporate potassium-rich foods (bananas, spinach, avocados), and track morning/evening BP readings.")
+    elif bp == "low":
+        recs.append("Blood Pressure: Reported blood pressure is low. Stay well hydrated, ensure adequate dietary electrolyte balance, and rise slowly from sitting or lying positions.")
+    else:
+        recs.append("Cardiovascular: Optimal blood pressure reported. Sustain cardiovascular endurance with at least 150 minutes of moderate aerobic activity weekly.")
+
+    # 3. Blood Sugar & Metabolic Health
+    sugar = a.get("bloodSugar", "normal")
+    if sugar == "high":
+        recs.append("Metabolic Health: Elevated blood sugar reported. Limit refined carbohydrates and high-fructose beverages; pair complex carbohydrates with dietary fiber and lean protein, and take a 10-minute walk after meals to blunt glucose spikes.")
+    elif sugar == "low":
+        recs.append("Metabolic Health: Blood sugar reported low. Consume balanced meals at regular intervals with complex carbohydrates and healthy fats to maintain steady plasma glucose.")
+    else:
+        recs.append("Metabolic Health: Normal blood sugar status. Maintain insulin sensitivity through regular physical exercise and minimal ultra-processed food consumption.")
+
+    # 4. Sleep & Recovery
+    sleep = float(a.get("sleepHours", 7))
+    if sleep < 6:
+        recs.append("Sleep & Recovery: You reported sleeping under 6 hours. Insufficient sleep elevates systemic inflammation and nocturnal blood pressure. Aim for 7–8 hours in a dark, quiet bedroom (18–20°C) with no screens 45 minutes before sleep.")
+    elif sleep > 9:
+        recs.append("Sleep & Recovery: Prolonged sleep (> 9 hours) paired with daytime tiredness may indicate non-restorative sleep. Consider evaluation for sleep architecture quality or sleep apnea.")
+    else:
+        recs.append("Sleep Hygiene: Sleep duration is in the recommended range (7–9 hours). Strengthen your circadian rhythm with 10–15 minutes of outdoor sunlight within an hour of waking.")
+
+    # 5. Stress & Autonomic Balance
+    stress = float(a.get("stressLevel", 5))
+    if stress >= 7:
+        recs.append("Stress Management: High stress index reported. Practice daily parasympathetic activation: 4-7-8 diaphragmatic breathing or physiological sighs (2 quick inhales, 1 extended exhale) for 5 minutes twice daily.")
+    elif stress >= 5:
+        recs.append("Stress Management: Moderate stress levels. Schedule deliberate 5-minute micro-breaks during work and engage in regular outdoor relaxation to buffer cortisol accumulation.")
+    else:
+        recs.append("Stress Management: Stress is well-managed. Continue healthy mindfulness and social connection habits.")
+
+    # 6. Physical Activity & Movement
+    activity = a.get("activity", "moderate")
+    if activity == "sedentary":
+        recs.append("Physical Fitness: Sedentary lifestyle identified. Start with accessible movement: break prolonged sitting every 45 minutes, and build a routine of 20–30 minutes of daily brisk walking.")
+    elif activity == "light":
+        recs.append("Physical Fitness: Progress your baseline by adding 30 minutes of moderate aerobic training (cycling, jogging, swimming) 4–5 days per week plus 2 days of bodyweight resistance.")
+    else:
+        recs.append("Physical Fitness: Great activity foundation. Maintain consistent moderate-to-vigorous exercise and include strength/resistance training to safeguard joint mobility and metabolic mass.")
+
+    # 7. Dietary Quality & Nutrition
+    diet = a.get("diet", "balanced")
+    if diet == "highSugarFat":
+        recs.append("Nutritional Quality: High intake of processed sugars and saturated fats reported. Swap fried and ultra-processed snacks for antioxidant-rich fruits, raw nuts, seeds, and extra virgin olive oil.")
+    elif diet == "irregular":
+        recs.append("Nutritional Consistency: Irregular meal patterns disrupt metabolic rhythms and insulin response. Set consistent daily meal windows to stabilize energy and digestive health.")
+    else:
+        recs.append("Nutritional Quality: Balanced dietary pattern reported. Keep diversifying plant foods (aim for 25+ different plant varieties weekly) to enrich the gut microbiome.")
+
+    # 8. Modifiable Substance Factors
+    smoking = a.get("smoking", "no")
+    if smoking in ("yes", "occasionally"):
+        recs.append("Cardiovascular Risk: Smoking dramatically accelerates arterial stiffness and endothelial damage. Quitting smoking cuts excess coronary heart disease risk by half within 1 year.")
+
+    alcohol = a.get("alcohol", "no")
+    if alcohol == "frequent":
+        recs.append("Metabolic Recovery: Frequent alcohol consumption disrupts restorative REM sleep, elevates triglycerides, and increases liver workload. Aim for at least 3–4 alcohol-free days weekly.")
+
+    # 9. Symptom Alerts
+    symptoms = set(a.get("symptoms") or [])
+    if symptoms & {"chestPain", "shortnessOfBreath"}:
+        recs.append("⚠️ Critical Symptom Alert: Reported chest discomfort or shortness of breath should be assessed promptly by a healthcare professional, especially if exertion-triggered.")
+    elif symptoms & {"frequentUrination", "excessiveThirst", "blurredVision"}:
+        recs.append("Symptom Correlation: Frequent urination and increased thirst are recognized indicators for glucose intolerance; consider requesting an HbA1c test from your doctor.")
+    elif symptoms & {"fatigue", "dizziness", "headache"}:
+        recs.append("Symptom Notice: Persistent fatigue and headaches often correlate with chronic dehydration, electrolyte shifts, or sleep debt. Increase daily water intake (2–2.5L) and monitor duration.")
+
+    # 10. Educational Disclaimer
+    recs.append("Educational Note: This assessment is designed for educational health awareness and does not replace medical diagnosis, consultation, or treatment by a licensed physician.")
+
+    return recs
+
+
 def predict(answers):
     validate_input(answers)
     row=_features(answers)
@@ -80,8 +169,5 @@ def predict(answers):
     indicators=_condition_indicators(answers)
     # Educational wellness score is a simple presentation score; the ML model is the risk classifier.
     score=max(0,min(100,round(100 - prob_map.get('High',0)*55 - prob_map.get('Medium',0)*25)))
-    recs=["This assessment is educational only and is not a medical diagnosis."]
-    if risk=='High': recs.append("Consider discussing your health concerns with a qualified healthcare professional.")
-    elif risk=='Medium': recs.append("Consider healthy lifestyle improvements and discuss persistent concerns with a qualified professional.")
-    else: recs.append("Continue healthy habits and use the result as an educational risk indicator, not a diagnosis.")
+    recs=_generate_recommendations_and_tips(answers, risk, score, indicators)
     return {'conditions':indicators,'topCondition':indicators[0]['name'] if indicators else 'General Wellness Assessment','riskLevel':risk,'healthScore':score,'recommendations':recs,'modelType':'Random Forest (trained ML)','modelVersion':MODEL_VERSION,'riskProbabilities':prob_map}
